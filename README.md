@@ -1,6 +1,6 @@
 # CPSC 304 Project Team 36
 
-**Task Breakdown:**
+##Task Breakdown:
 
 Nicholas - Create react components and set up GUI, help with implementing queries and api endpoints
 
@@ -8,7 +8,7 @@ Cole - Create project description PDF and README file, work on implementing quer
 
 Anikait - Work on implementing query options
 
-**Time-Line:** 
+##Time-Line:
 
 August 2nd:
 
