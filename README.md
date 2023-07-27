@@ -18,18 +18,18 @@ Oracle Database sql script created to instantiate tables, utilizing the insertio
 
 **Aug 4th:** 
 
-Finish project description PDF
+*Finish project description PDF
 
-Finish implementing INSERT, DELETE, UPDATE, Selection, and Projection query operations.
+*Finish implementing INSERT, DELETE, UPDATE, Selection, and Projection query operations.
 
 **Aug 6th:**
 
-Finish implementing Aggregtion with Group By, Aggregation with Having, Nested Aggregation with Group By, and Division
+*Finish implementing Aggregtion with Group By, Aggregation with Having, Nested Aggregation with Group By, and Division
 
 **Aug 7th:**
 
-Connect the front-end GUI to the back-end server and create functions that will populate the data into the previously made front-end output components
+*Connect the front-end GUI to the back-end server and create functions that will populate the data into the previously made front-end output components
 
 **Aug 8th:**
 
-Fix any potential bugs, and any additional components or queries that are needed 
+*Fix any potential bugs, and any additional components or queries that are needed 
