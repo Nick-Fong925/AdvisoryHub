@@ -31,3 +31,11 @@
 **Aug 8th:**
 
 + Fix any potential bugs, and any additional components or queries that are needed 
+
+**Aug 9th:**
+
++ Have group meeting to go over all work done and complete integration. Test application.
+
+**Aug 10th:**
+
++ Prepare for Group Demo, conduct any additional bug fixes if any found. Further test application.
