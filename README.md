@@ -2,11 +2,11 @@
 
 ## Task Breakdown:
 
-Nicholas - Create react components and set up GUI, help with implementing queries and api endpoints
+**Nicholas** - Create react components and set up GUI, help with implementing queries and api endpoints
 
-Cole - Create project description PDF and README file, work on implementing queries options
+**Cole** - Create project description PDF and README file, work on implementing queries options
 
-Anikait - Work on implementing query options
+**Anikait** - Work on implementing query options
 
 ## Time-Line:
 
