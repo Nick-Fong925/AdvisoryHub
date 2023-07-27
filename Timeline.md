@@ -34,8 +34,8 @@
 
 **Aug 9th:**
 
-+ Have group meeting to go over all work done and complete integration. Test application.
++ Have group meeting to go over all work done, complete integration, and test application.
 
 **Aug 10th:**
 
-+ Prepare for Group Demo, conduct any additional bug fixes if any found. Further test application.
++ Prepare for Group Demo, conduct any additional bug fixes if any found, and further test application.
