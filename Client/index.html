@@ -4,11 +4,11 @@
     <title></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
 </head>
 <body>
-<h3>Add Coop Advisor</h3>
+<h3>Add New Coop-Advisor</h3>
 <form id="CoopAdvisorForm">
     <label for="CoopAdvisorAdvisorID">Advisor ID:</label>
     <input
@@ -155,9 +155,9 @@
 
 
 <div id="JobContractFormContainer" style="display: none;">
-    <h3>Job Contract</h3>
+    <h3>Add Job Contract</h3>
     <form id="JobContractForm">
-        <!-- Add form fields for Job Contract here -->
+
         <label for="JobContractDocumentID">Document ID:</label>
         <input
                 type="number"
@@ -206,12 +206,10 @@
                 id="JobContractEmployerID"
                 name="JobContractEmployerID"
         /><br />
-
-        <input type="button" value="Create" onclick="insertJobContract()" />
     </form>
 </div>
 
-<h3>Job Application</h3>
+<h3>Add Job Application</h3>
 <form id="JobApplicationForm">
     <label for="JobApplicationApplicationID">Application ID:</label>
     <input
@@ -265,7 +263,7 @@
     <input type="button" value="Create" onclick="insertJobApplication()" />
 </form>
 
-<h3>Job</h3>
+<h3>Add Job</h3>
 <form id="JobForm">
     <label for="JobJobID">Job ID:</label>
     <input type="number" id="JobJobID" name="JobJobID" /><br />
@@ -302,7 +300,7 @@
     <input type="button" value="Create" onclick="insertJob()" />
 </form>
 
-<h3>Employer</h3>
+<h3>Add Employer</h3>
 <form id="EmployerForm">
     <label for="EmployerEmployerID">Employer ID:</label>
     <input
@@ -331,7 +329,7 @@
     <input type="button" value="Create" onclick="insertEmployer()" />
 </form>
 
-<h3>CompanyContact</h3>
+<h3>Add CompanyContact</h3>
 <form id="CompanyContactForm">
     <label for="CompanyContactFirstName">First Name:</label>
     <input
@@ -371,7 +369,7 @@
     <input type="button" value="Create" onclick="insertCompanyContact()" />
 </form>
 
-<h3>App Contains Cover Letter</h3>
+<h3>Add Cover Letter to Application</h3>
 <form id="AppContainsCoverLetterForm">
     <label for="AppContainsCoverLetterApplicationID">Application ID:</label>
     <input
@@ -394,7 +392,7 @@
     />
 </form>
 
-<h3>Student Gets Job</h3>
+<h3>Add Student-Job Assignment</h3>
 <form id="StudentGetsJobForm">
     <label for="StudentGetsJobStudentID">Student ID:</label>
     <input
@@ -427,7 +425,7 @@
     <input type="button" value="Create" onclick="insertStudentGetsJob()" />
 </form>
 
-<h3>Student Interview Job with Company Contact</h3>
+<h3>Add Student Interview</h3>
 <form id="StudentInterviewJobwCompanyContactForm">
     <label for="StudentInterviewJobwCompanyContactStudentID">Student ID:</label>
     <input type="number" id="StudentInterviewJobwCompanyContactStudentID" name="StudentInterviewJobwCompanyContactStudentID"><br>
@@ -454,4 +452,4 @@
 
     <input type="button" value="Create" onclick="insertStudentInterviewJobwCompanyContact()">
 </form>
-<script>
+

@@ -1,0 +1,40 @@
+
+form {
+  margin-bottom: 20px;
+}
+
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form input[type="tel"],
+form input[type="url"],
+form input[type="date"],
+form input[type="time"],
+form select {
+  display: block;
+  margin-bottom: 15px;
+  margin-left:10px;
+  margin-top: 15px;
+  padding: 5px;
+  width: 60%;
+  box-sizing: border-box;
+}
+
+form input[type="button"] {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
