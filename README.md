@@ -1,12 +1,12 @@
 # project_h9f1g_r0u2d_s7t3k
-##Task Breakdown:
+## Task Breakdown:
 __Nicholas__ - Create react components and set up GUI, help with implementing queries and api endpoints
 
 __Cole__ - Create project description PDF and README file, work on implementing queries options
 
 __Anikait__ - Work on implementing query options
 
-##Time-Line:
+## Time-Line:
 
 __August 2nd:__
 GUI complete, finished creating react components such as places to input “queries”, and output components that can be used to map data through GET requests to the backend server.
