@@ -350,7 +350,11 @@
             global $db_conn;
             // Drop old table
             executePlainSQL("DROP TABLE CoopAdvisor");
+<<<<<<< HEAD
             executePlainSQL("DROP TABLE Student");
+=======
+ 
+>>>>>>> cb008d79f7693eb4601362ad3337a9a6c58b01c7
 
             // Create new table
             echo "<br> creating new table <br>";
@@ -478,5 +482,8 @@
 
 ?>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> cb008d79f7693eb4601362ad3337a9a6c58b01c7
