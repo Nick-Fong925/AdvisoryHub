@@ -60,70 +60,35 @@
 <h3>Update New Coop-Advisor</h3>
 <form method ="POST" action="index.php">
 <input type="hidden" id ="updateCoopAdvisorRequest" name = "updateCoopAdvisorRequest">
-    <label for="OldCoopAdvisorAdvisorID">Old Advisor ID:</label>
-    <input
-            type="number"
-            id="CoopAdvisorAdvisorID"
-            name="OldCoopAdvisorAdvisorID"
-    /><br />
-    
     <label for="CoopAdvisorAdvisorID">Advisor ID:</label>
     <input
             type="number"
             id="CoopAdvisorAdvisorID"
             name="CoopAdvisorAdvisorID"
     /><br />
-
-    <label for="OldCoopAdvisorFirstName">Old First Name:</label>
-    <input
-            type="text"
-            id="CoopAdvisorFirstName"
-            name="OldCoopAdvisorFirstName"
-    /><br />
     
-    <label for="CoopAdvisorFirstName">First Name:</label>
+    <label for="CoopAdvisorFirstName">New First Name:</label>
     <input
             type="text"
             id="CoopAdvisorFirstName"
             name="CoopAdvisorFirstName"
     /><br />
-
-    <label for="OldCoopAdvisorLastName">Old Last Name:</label>
-    <input
-            type="text"
-            id="CoopAdvisorLastName"
-            name="OldCoopAdvisorLastName"
-    /><br />
     
-    <label for="CoopAdvisorLastName">Last Name:</label>
+    <label for="CoopAdvisorLastName">New Last Name:</label>
     <input
             type="text"
             id="CoopAdvisorLastName"
             name="CoopAdvisorLastName"
     /><br />
 
-    <label for="OldCoopAdvisorEmailAddress">Old Email Address:</label>
-    <input
-            type="email"
-            id="CoopAdvisorEmailAddress"
-            name="OldCoopAdvisorEmailAddress"
-    /><br />
-
-    <label for="CoopAdvisorEmailAddress">Email Address:</label>
+    <label for="CoopAdvisorEmailAddress">New Email Address:</label>
     <input
             type="email"
             id="CoopAdvisorEmailAddress"
             name="CoopAdvisorEmailAddress"
     /><br />
 
-    <label for="OldCoopAdvisorPhoneNumber">Old Phone Number:</label>
-    <input
-            type="tel"
-            id="CoopAdvisorPhoneNumber"
-            name="CoopAdvisorPhoneNumber"
-    /><br />
-
-    <label for="CoopAdvisorPhoneNumber">Phone Number:</label>
+    <label for="CoopAdvisorPhoneNumber">New Phone Number:</label>
     <input
             type="tel"
             id="CoopAdvisorPhoneNumber"
@@ -338,11 +303,15 @@
         function handleUpdateRequestCoopAdvisor() {
             global $db_conn;
 
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
+            $newID = $_POST['CoopAdvisorAdvisorID'];
+            $newFirstName = $_POST["CoopAdvisorFirstName"];
+            $newLastName = $_POST["CoopAdvisorLastName"];
+            $newEmail = $_POST["CoopAdvisorEmailAddress"];
+            $newPhone = $_POST["CoopAdvisorPhoneNumber"];
+
 
             // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE CoopAdvisor SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+            executePlainSQL("UPDATE CoopAdvisor SET CoopAdvisorFirstName='" .$newFirstName . "', CoopAdvisorLastName='" .$newLastName ."', CoopAdvisorEmailAddress='" .$newEmail . "', CoopAdvisorPhoneNumber='" . $newPhone ."' WHERE CoopAdvisorAdvisorID='" . $newID . "'");
             OCICommit($db_conn);
         }
 
@@ -350,11 +319,7 @@
             global $db_conn;
             // Drop old table
             executePlainSQL("DROP TABLE CoopAdvisor");
-<<<<<<< HEAD
             executePlainSQL("DROP TABLE Student");
-=======
- 
->>>>>>> cb008d79f7693eb4601362ad3337a9a6c58b01c7
 
             // Create new table
             echo "<br> creating new table <br>";
@@ -482,8 +447,5 @@
 
 ?>
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> cb008d79f7693eb4601362ad3337a9a6c58b01c7
