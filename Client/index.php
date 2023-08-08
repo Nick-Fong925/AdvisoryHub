@@ -57,6 +57,33 @@
     <input type="submit" value="Create" name="insertCoopAdvisor"></p>
 </form>
 
+<h3>Selection</h3>
+<form method="GET" action="index.php">
+<input type="hidden" id ="selectionRequest" name = "selectionRequest">
+    <label for="selection">Select Attribute(s):</label>
+    <input
+            type="text"
+            id="Attribute"
+            name="Attribute"
+    /><br />
+
+    <label for="From">Select Table(s):</label>
+    <input
+            type="text"
+            id="Table"
+            name="Table"
+    /><br />
+
+    <label for="Where">Condition(s):</label>
+    <input
+            type="text"
+            id="Condition"
+            name="Condition"
+    /><br />
+
+    <input type="submit" value="Create" name="select"></p>
+
+
 <h3>Update New Coop-Advisor</h3>
 <form method ="POST" action="index.php">
 <input type="hidden" id ="updateCoopAdvisorRequest" name = "updateCoopAdvisorRequest">
@@ -483,11 +510,15 @@
                     FOREIGN KEY (CompanyContactFirstName, EmployerID) REFERENCES CompanyContact (FirstName, EmployerID)
                 )");
 
-
+          
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (1, 'Chris', 'McKinnon', 'chris.mckinnon@gmail.com', '604-111-1111')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (2, 'Emily', 'Anderson', 'emily.anderson@yahoo.com', '778-222-3333')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (3, 'Michael', 'Smith', 'michael.smith@hotmail.com', '236-555-6666')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (4, 'Sophia', 'Johnson', 'sophia.johnson@gmail.com', '604-888-9999')");
+          
+            executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");
+
+
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");     
 
             executePlainSQL("INSERT INTO Student VALUES (1, 1, 'Nicholas', 'Fong', 'nicholas.fong@gmail.com', '604-222-4444', 3, 5, 'Software Engineering')");
@@ -638,7 +669,7 @@
         }
 
 
-
+        // DELETE THIS NOT NEEDED
         function handleUpdateRequest() {
                 global $db_conn;
     
@@ -676,6 +707,22 @@
             printResult($result);
         }
 
+
+        function handleSelectionRequest(){
+            global $db_conn;
+            $attribute = $_GET["Attribute"];
+            $table = $_GET["Table"];
+            $condition = $_GET["Condition"];
+        
+            executePlainSQL("SELECT CoopAdvisorAdvisorID FROM '" . $table ."'");
+            if ($condition == "NONE"){
+                $result = executePlainSQL("SELECT '" . $attribute . "' FROM '" . $table ."'");
+            } else{
+                $result = executePlainSQL("SELECT '" . $attribute . "' FROM '" . $table . "' WHERE '" . $condition . "'");
+            }
+            printResult($result);
+        }
+
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
@@ -700,10 +747,9 @@
             if (($row = oci_fetch_row($result)) !== false) {
                 echo "<br> The number of tuples in CoopAdvisor: " . $row[0] . "<br>";
             }
-        }
-        
-        
+        }    
 
+        
 
                 // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -715,6 +761,8 @@
                     handleDisplayRequest();
                 } else if (array_key_exists("joinTableRequest", $_GET)) {
                     handlejoinTableRequest();
+                } else if(array_key_exists("selectionRequest", $_GET)){
+                    handleSelectionRequest();
                 }
                 
                 disconnectFromDB();
@@ -723,7 +771,7 @@
 
 		if (isset($_POST['reset']) || isset($_POST['updateCoopAdvisor']) || isset($_POST['insertCoopAdvisor'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"])) {
+        } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"]) || isset($_GET["selectionRequest"])) {
             handleGETRequest();
         } else if (isset($_GET['joinTableRequest']) || isset($_GET["displayStudents"])) {
             handleGETRequest();
