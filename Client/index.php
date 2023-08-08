@@ -470,9 +470,7 @@
             if (($row = oci_fetch_row($result)) !== false) {
                 echo "<br> The number of tuples in CoopAdvisor: " . $row[0] . "<br>";
             }
-        }
-        
-        
+        }    
 
 
                 // HANDLE ALL GET ROUTES
