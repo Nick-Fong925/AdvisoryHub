@@ -161,7 +161,13 @@
     <input type="button" value="Create" onclick="insertStudent()" />
 </form>
 
-
+<h3>Display Students Advised by Co-op Advisor</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" name="joinTableRequest">
+    <label for="advisorID">Co-op Advisor ID:</label>
+    <input type="number" id="advisorID" name="advisorID" required>
+    <p><input type="submit" value="Display Students" name="displayStudents"></p>
+</form>
 
 
 <h3>Count the Tuples in CoopAdvisor</h3>
@@ -335,7 +341,7 @@
             executePlainSQL("DROP TABLE CoopAdvisor");
 
  
-            echo "<br> creating new table <br>";
+
             executePlainSQL("CREATE TABLE CoopAdvisor(
                 CoopAdvisorAdvisorID INTEGER,
                 CoopAdvisorFirstName CHAR(40),
@@ -707,6 +713,8 @@
                     handleCountRequest();
                 } else if (array_key_exists("displayTableRequest", $_GET)){
                     handleDisplayRequest();
+                } else if (array_key_exists("joinTableRequest", $_GET)) {
+                    handlejoinTableRequest();
                 }
                 
                 disconnectFromDB();
@@ -717,9 +725,45 @@
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"])) {
             handleGETRequest();
+        } else if (isset($_GET['joinTableRequest']) || isset($_GET["displayStudents"])) {
+            handleGETRequest();
         }
 
+        function handlejoinTableRequest() {
+            global $db_conn;
+            
+            if (isset($_GET['advisorID'])) {
+                $advisorID = $_GET['advisorID'];
+                
+                $query = "SELECT s.FirstName, s.LastName, s.Email
+                          FROM Student s
+                          JOIN CoopAdvisor c ON s.AdvisorID = c.CoopAdvisorAdvisorID
+                          WHERE c.CoopAdvisorAdvisorID = :advisorID";
+                
+                $stmt = oci_parse($db_conn, $query);
+                oci_bind_by_name($stmt, ":advisorID", $advisorID);
+                oci_execute($stmt);
+
+                echo "<table border='1'>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>";
+        
+                
+                while ($row = oci_fetch_assoc($stmt)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['FIRSTNAME'] . "</td>";
+                    echo "<td>" . $row['LASTNAME'] . "</td>";
+                    echo "<td>" . $row['EMAIL'] . "</td>";
+                    echo "</tr>";
+                }
+                
+                echo "</table>";
+            } else {
+                echo "Please provide a valid CoopAdvisorAdvisorID.";
+            }
+        }
+        
 ?>
-
-
-
