@@ -472,6 +472,7 @@
             }
         }    
 
+        
 
                 // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
