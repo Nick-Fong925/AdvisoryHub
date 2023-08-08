@@ -344,11 +344,24 @@
 
         function handleResetRequest() {
             global $db_conn;
-            // Drop old table
-            executePlainSQL("DROP TABLE CoopAdvisor");
-            executePlainSQL("DROP TABLE Student");
+            
+            executePlainSQL("DROP TABLE StudentInterviewJobwCompanyContact");
+            executePlainSQL("DROP TABLE StudentGetsJob");
+            executePlainSQL("DROP TABLE AppContainsCoverLetter");
+            executePlainSQL("DROP TABLE JobApplication");
+            executePlainSQL("DROP TABLE JobContract");
+            executePlainSQL("DROP TABLE CompanyContact");
+            executePlainSQL("DROP TABLE Job");
+            executePlainSQL("DROP TABLE Employer");
+            executePlainSQL("DROP TABLE Resumé");
+            executePlainSQL("DROP TABLE CoverLetter");
+            executePlainSQL("DROP TABLE StudentDocument");
 
-            // Create new table
+
+            executePlainSQL("DROP TABLE Student");
+            executePlainSQL("DROP TABLE CoopAdvisor");
+
+ 
             echo "<br> creating new table <br>";
             executePlainSQL("CREATE TABLE CoopAdvisor(
                 CoopAdvisorAdvisorID INTEGER,
@@ -356,7 +369,125 @@
                 CoopAdvisorLastName CHAR(40),
                 CoopAdvisorEmailAddress CHAR(40),
                 CoopAdvisorPhoneNumber CHAR(30),
-                PRIMARY KEY (CoopAdvisorAdvisorID) )");
+                PRIMARY KEY (CoopAdvisorAdvisorID) )");   
+
+            executePlainSQL("CREATE TABLE Student (
+                StudentID INTEGER,
+                AdvisorID INTEGER NOT NULL,
+                FirstName CHAR(40),
+                LastName CHAR(40),
+                Email CHAR(40),
+                PhoneNumber CHAR(20),
+                CurrentYear INTEGER,
+                NumberofCompletedTerms INTEGER,
+                JobPreferences CHAR(100),
+                PRIMARY KEY (StudentID), 
+                FOREIGN KEY (AdvisorID) REFERENCES CoopAdvisor)");
+                
+            executePlainSQL("CREATE TABLE StudentDocument (
+                DocumentID INTEGER,
+                DocumentName CHAR(30),
+                UploadDate DATE,
+                UploadTime TIMESTAMP, 
+                StudentID INTEGER NOT NULL,
+                PRIMARY KEY(DocumentID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+            )");
+
+            executePlainSQL("CREATE TABLE Resumé (
+                DocumentID INTEGER,
+                PRIMARY KEY(DocumentID),
+                FOREIGN KEY (DocumentID) REFERENCES StudentDocument
+            )");
+  
+
+            executePlainSQL("CREATE TABLE CoverLetter (
+                DocumentID INTEGER,
+                PRIMARY KEY (DocumentID),
+                FOREIGN KEY (DocumentID) REFERENCES StudentDocument (DocumentID)
+            )");
+
+
+            executePlainSQL("CREATE TABLE Employer (
+                EmployerID INTEGER,
+                EmployerName CHAR(50),
+                Website Char(50),
+                HeadQuarterLocation Char(20),
+                PRIMARY KEY (EmployerID)
+            )");
+
+
+            executePlainSQL("CREATE TABLE JobContract (
+                DocumentID INTEGER,
+                StudentID CHAR(20),
+                DatePosted DATE,
+                TimePosted TIMESTAMP,
+                SalaryOffered INTEGER,
+                PositionOffered CHAR(20),
+                EmployerID INTEGER NOT NULL, 
+                PRIMARY KEY (DocumentID),
+                FOREIGN KEY (EmployerID) REFERENCES Employer (EmployerID))");
+           
+
+            executePlainSQL("CREATE TABLE Job (
+                JobID INTEGER,
+                EmployerID INTEGER NOT NULL,
+                StartDate DATE,
+                Title CHAR(50),
+                JobDescription CHAR(400),
+                PositionLength CHAR(50),
+                DesiredProgram CHAR(50),
+                Salary CHAR(50),
+                PRIMARY KEY (JobID),
+                FOREIGN KEY (EmployerID) REFERENCES Employer(EmployerID)
+            )");
+ 
+
+            executePlainSQL("CREATE TABLE JobApplication (
+                ApplicationID INTEGER,
+                ApplicationName CHAR(20),
+                StudentID INTEGER NOT NULL,
+                ResumeDocumentID INTEGER NOT NULL,
+                JobID INTEGER NOT NULL,
+                ApplicationDate DATE,
+                JobApplicationStatus CHAR(20) DEFAULT 'Pending',
+                PRIMARY KEY (ApplicationID),
+                FOREIGN KEY (StudentID) REFERENCES Student (StudentID),
+                FOREIGN KEY (ResumeDocumentID) REFERENCES Resumé (DocumentID), 
+                FOREIGN KEY (JobID) REFERENCES Job (JobID)
+            )");
+
+
+            executePlainSQL("CREATE TABLE CompanyContact (
+                FirstName CHAR(40),
+                LastName CHAR(40),
+                PhoneNumber CHAR(40),
+                EmailAddress CHAR(40),
+                EmployerID INTEGER,
+                PRIMARY KEY (FirstName, EmployerID),
+                FOREIGN KEY (EmployerID) REFERENCES Employer (EmployerID) ON DELETE CASCADE
+            )");
+           
+
+            executePlainSQL("CREATE TABLE AppContainsCoverLetter (
+                ApplicationID INTEGER,
+                DocumentID INTEGER,
+                PRIMARY KEY (ApplicationID, DocumentID),
+                FOREIGN KEY (ApplicationID) REFERENCES JobApplication (ApplicationID),
+                FOREIGN KEY (DocumentID) REFERENCES CoverLetter (DocumentID)
+            )");
+
+
+            executePlainSQL("CREATE TABLE StudentGetsJob (
+                StudentID INTEGER,
+                JobID INTEGER,
+                AcceptanceDate DATE,
+                AcceptanceTime TIMESTAMP, 
+                PRIMARY KEY (StudentID, JobID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+                FOREIGN KEY (JobID) REFERENCES Job(JobID)
+            )");
+    
 
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (1, 'Chris', 'McKinnon', 'chris.mckinnon@gmail.com', '604-111-1111')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (2, 'Emily', 'Anderson', 'emily.anderson@yahoo.com', '778-222-3333')");
@@ -437,11 +568,10 @@
             $table = $_GET["Table"];
             $condition = $_GET["Condition"];
         
-            executePlainSQL("SELECT CoopAdvisorAdvisorID FROM '" . $table ."'");
             if ($condition == "NONE"){
-                $result = executePlainSQL("SELECT '" . $attribute . "' FROM '" . $table ."'");
+                $result = executePlainSQL("SELECT $attribute FROM $table");
             } else{
-                $result = executePlainSQL("SELECT '" . $attribute . "' FROM '" . $table . "' WHERE '" . $condition . "'");
+                $result = executePlainSQL("SELECT $attribute FROM $table WHERE $condition ");
             }
             printResult($result);
         }
@@ -472,9 +602,6 @@
             }
         }
         
-        
-
-
                 // HANDLE ALL GET ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handleGETRequest() {
