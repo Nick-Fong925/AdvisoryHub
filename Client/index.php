@@ -361,7 +361,7 @@
                 DocumentID INTEGER,
                 DocumentName CHAR(30),
                 UploadDate DATE,
-                UploadTime TIMESTAMP, 
+                UploadTime TIMESTAMP, -- Use TIMESTAMP data type instead of TIME
                 StudentID INTEGER NOT NULL,
                 PRIMARY KEY(DocumentID),
                 FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
