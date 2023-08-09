@@ -4,8 +4,6 @@
     <title></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
 </head>
 <body>
 <h3>Reset</h3>
@@ -229,6 +227,27 @@
     <p><input type="button" value="Create" name="Division"></p>
 
 </form>
+
+<h3>Find Advisors with Student Count More Than:</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" name="advisorStudentCountThresholdRequest">
+    <label for="numberofStudents">Minimum Number of Advised Students:</label>
+    <input type="number" id="numberofStudents" name="numberofStudents" required><br>
+    <input type="submit" value="Find Advisors" name="submit">
+</form>
+
+<h3>Project Student Attributes</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" name="studentProjectionRequest">
+    <label for="attributes">Attributes:</label>
+    <input type="text" id="attributes" name="attributes" required>
+    <br>
+    <label for="condition">Condition (optional):</label>
+    <input type="text" id="condition" name="condition">
+    <p><input type="submit" value="Project Attributes" name="projectAttributes"></p>
+</form>
+
+
 
 
 
@@ -771,6 +790,10 @@
                     handleSelectionRequest();
                 } else if(array_key_exists("divisionRequest", $_GET)){
                     hdandleDivisionRequest();
+                } else if(array_key_exists("studentProjectionRequest", $_GET)) {
+                    handleProjectionRequest();
+                } else if (array_key_exists("advisorStudentCountThresholdRequest", $_GET)) {
+                    handleAdvisorStudentCountThresholdRequest();
                 }
                 
                 disconnectFromDB();
@@ -782,6 +805,10 @@
         } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"]) || isset($_GET["selectionRequest"])) {
             handleGETRequest();
         } else if (isset($_GET['joinTableRequest']) || isset($_GET["displayStudents"])) {
+            handleGETRequest();
+        } else if (isset($_GET['studentProjectionRequest']) || isset($_GET["projectAttributes"])) {
+            handleGETRequest();
+        } if (isset($_GET["advisorStudentCountThresholdRequest"]) || ($_GET["findAdvisors"])) {
             handleGETRequest();
         }
 
@@ -819,6 +846,86 @@
                 echo "</table>";
             } else {
                 echo "Please provide a valid CoopAdvisorAdvisorID.";
+            }
+        }
+        
+        function handleAdvisorStudentCountThresholdRequest() {
+            global $db_conn;
+               if (isset($_GET['advisorStudentCountThresholdRequest'])) {
+                $numberofStudents = $_GET['numberofStudents'];
+                
+           
+                
+                $query = "SELECT ca.CoopAdvisorFirstName AS AdvisorFirstName,
+                                ca.CoopAdvisorLastName AS AdvisorLastName,
+                                COUNT(s.StudentID) AS TotalAdvisedStudents
+                            FROM
+                                CoopAdvisor ca
+                            LEFT JOIN
+                                Student s ON ca.CoopAdvisorAdvisorID = s.AdvisorID
+                            GROUP BY
+                                ca.CoopAdvisorAdvisorID, ca.CoopAdvisorFirstName, ca.CoopAdvisorLastName
+                            HAVING
+                                COUNT(s.StudentID) > :numberofStudents";
+        
+                $stmt = oci_parse($db_conn, $query);
+                oci_bind_by_name($stmt, ":numberofStudents", $numberofStudents);
+                oci_execute($stmt);
+        
+                echo "<table border='1'>
+                <tr>
+                    <th>Advisor First Name</th>
+                    <th>Advisor Last Name</th>
+                    <th>Number of Advised Students</th>
+                </tr>";
+        
+                while ($row = oci_fetch_assoc($stmt)) {
+                    echo "<tr><td>" . $row["ADVISORFIRSTNAME"] . "</td><td>" . $row["ADVISORLASTNAME"] . "</td><td>" . $row["TOTALADVISEDSTUDENTS"] . "</td></tr>";
+                }
+        
+                echo "</table>";
+            }
+        }
+
+        function handleProjectionRequest() {
+            global $db_conn;
+        
+            if (isset($_GET['attributes'])) {
+                $attributes = $_GET['attributes'];
+                $attributesArray = explode(",", $attributes);
+                $selectClause = implode(", ", $attributesArray);
+        
+                $whereClause = "";
+                if (isset($_GET['condition']) && !empty($_GET['condition'])) {
+                    $condition = $_GET['condition'];
+                    $whereClause = " WHERE $condition";
+                }
+        
+                $query = "SELECT $selectClause FROM Student $whereClause";
+        
+                $stmt = oci_parse($db_conn, $query);
+                oci_execute($stmt);
+        
+                echo "<table border='1'>
+                    <tr>";
+                
+                foreach ($attributesArray as $attribute) {
+                    echo "<th>$attribute</th>";
+                }
+        
+                echo "</tr>";
+        
+                while ($row = oci_fetch_assoc($stmt)) {
+                    echo "<tr>";
+                    foreach ($attributesArray as $attribute) {
+                        echo "<td>" . $row[strtoupper($attribute)] . "</td>";
+                    }
+                    echo "</tr>";
+                }
+        
+                echo "</table>";
+            } else {
+                echo "Please provide attributes to project.";
             }
         }
         
