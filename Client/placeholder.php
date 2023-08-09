@@ -7,452 +7,467 @@
     <link rel="stylesheet" href="index.css">
     <script src="index.js"></script>
 </head>
-<body>
-<h3>Add New Coop-Advisor</h3>
-<form id="CoopAdvisorForm">
-    <label for="CoopAdvisorAdvisorID">Advisor ID:</label>
-    <input
-            type="number"
-            id="CoopAdvisorAdvisorID"
-            name="CoopAdvisorAdvisorID"
-    /><br />
-
-    <label for="CoopAdvisorFirstName">First Name:</label>
-    <input
-            type="text"
-            id="CoopAdvisorFirstName"
-            name="CoopAdvisorFirstName"
-    /><br />
-
-    <label for="CoopAdvisorLastName">Last Name:</label>
-    <input
-            type="text"
-            id="CoopAdvisorLastName"
-            name="CoopAdvisorLastName"
-    /><br />
-
-    <label for="CoopAdvisorEmailAddress">Email Address:</label>
-    <input
-            type="email"
-            id="CoopAdvisorEmailAddress"
-            name="CoopAdvisorEmailAddress"
-    /><br />
-
-    <label for="CoopAdvisorPhoneNumber">Phone Number:</label>
-    <input
-            type="tel"
-            id="CoopAdvisorPhoneNumber"
-            name="CoopAdvisorPhoneNumber"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertCoopAdvisor()" />
-</form>
-
-<h3>Add Student</h3>
-<form id="StudentForm">
-    <label for="StudentStudentID">Student ID:</label>
-    <input
-            type="number"
-            id="StudentStudentID"
-            name="StudentStudentID"
-    /><br />
-
-    <label for="StudentAdvisorID">Advisor ID:</label>
-    <input
-            type="number"
-            id="StudentAdvisorID"
-            name="StudentAdvisorID"
-    /><br />
-
-    <label for="StudentFirstName">First Name:</label>
-    <input type="text" id="StudentFirstName" name="StudentFirstName" /><br />
-
-    <label for="StudentLastName">Last Name:</label>
-    <input type="text" id="StudentLastName" name="StudentLastName" /><br />
-
-    <label for="StudentEmail">Email:</label>
-    <input type="email" id="StudentEmail" name="StudentEmail" /><br />
-
-    <label for="StudentPhoneNumber">Phone Number:</label>
-    <input
-            type="tel"
-            id="StudentPhoneNumber"
-            name="StudentPhoneNumber"
-    /><br />
-
-    <label for="StudentCurrentYear">Current Year:</label>
-    <input
-            type="number"
-            id="StudentCurrentYear"
-            name="StudentCurrentYear"
-    /><br />
-
-    <label for="StudentNumberofCompletedTerms">Number of Completed Terms:</label>
-    <input
-            type="number"
-            id="StudentNumberofCompletedTerms"
-            name="StudentNumberofCompletedTerms"
-    /><br />
-
-    <label for="StudentJobPreferences">Job Preferences:</label>
-    <input
-            type="text"
-            id="StudentJobPreferences"
-            name="StudentJobPreferences"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertStudent()" />
-</form>
-
-<h3> Add Student Document</h3>
-<form id="StudentDocumentForm">
-    <label for="StudentDocumentDocumentID">Document ID:</label>
-    <input
-            type="number"
-            id="StudentDocumentDocumentID"
-            name="StudentDocumentDocumentID"
-    /><br />
-
-    <label for="StudentDocumentDocumentName">Document Name:</label>
-    <input
-            type="text"
-            id="StudentDocumentDocumentName"
-            name="StudentDocumentDocumentName"
-    /><br />
-
-    <label for="StudentDocumentUploadDate">Upload Date:</label>
-    <input
-            type="date"
-            id="StudentDocumentUploadDate"
-            name="StudentDocumentUploadDate"
-    /><br />
-
-    <label for="StudentDocumentUploadTime">Upload Time:</label>
-    <input
-            type="time"
-            id="StudentDocumentUploadTime"
-            name="StudentDocumentUploadTime"
-    /><br />
-
-    <label for="StudentDocumentStudentID">Student ID:</label>
-    <input
-            type="text"
-            id="StudentDocumentStudentID"
-            name="StudentDocumentStudentID"
-    /><br />
-
-    <label for="StudentDocumentType">Document Type:</label>
-
-    <select id="StudentDocumentType" name="StudentDocumentType" onchange="toggleJobContractForm()">
-        <option value="" selected disabled>Select Document Type</option>
-        <option value="Resume">Resume</option>
-        <option value="CoverLetter">Cover Letter</option>
-        <option value="JobContract">Job Contract</option>
-    </select><br />
-
-    <input type="button" value="Create" onclick="insertStudentDocument()" />
-</form>
-
-
-<div id="JobContractFormContainer" style="display: none;">
-    <h3>Add Job Contract</h3>
-    <form id="JobContractForm">
-
-        <label for="JobContractDocumentID">Document ID:</label>
-        <input
-                type="number"
-                id="JobContractDocumentID"
-                name="JobContractDocumentID"
-        /><br />
-
-        <label for="JobContractStudentID">Student ID:</label>
-        <input
-                type="text"
-                id="JobContractStudentID"
-                name="JobContractStudentID"
-        /><br />
-
-        <label for="JobContractDatePosted">Date Posted:</label>
-        <input
-                type="date"
-                id="JobContractDatePosted"
-                name="JobContractDatePosted"
-        /><br />
-
-        <label for="JobContractTimePosted">Time Posted:</label>
-        <input
-                type="time"
-                id="JobContractTimePosted"
-                name="JobContractTimePosted"
-        /><br />
-
-        <label for="JobContractSalaryOffered">Salary Offered:</label>
-        <input
-                type="number"
-                id="JobContractSalaryOffered"
-                name="JobContractSalaryOffered"
-        /><br />
-
-        <label for="JobContractPositionOffered">Position Offered:</label>
-        <input
-                type="text"
-                id="JobContractPositionOffered"
-                name="JobContractPositionOffered"
-        /><br />
-
-        <label for="JobContractEmployerID">Employer ID:</label>
-        <input
-                type="text"
-                id="JobContractEmployerID"
-                name="JobContractEmployerID"
-        /><br />
-    </form>
-</div>
-
-<h3>Add Job Application</h3>
-<form id="JobApplicationForm">
-    <label for="JobApplicationApplicationID">Application ID:</label>
-    <input
-            type="number"
-            id="JobApplicationApplicationID"
-            name="JobApplicationApplicationID"
-    /><br />
-
-    <label for="JobApplicationApplicationName">Application Name:</label>
-    <input
-            type="text"
-            id="JobApplicationApplicationName"
-            name="JobApplicationApplicationName"
-    /><br />
-
-    <label for="JobApplicationStudentID">Student ID:</label>
-    <input
-            type="text"
-            id="JobApplicationStudentID"
-            name="JobApplicationStudentID"
-    /><br />
-    <label for="JobApplicationResumeDocumentID">Resume Document ID:</label>
-    <input
-            type="text"
-            id="JobApplicationResumeDocumentID"
-            name="JobApplicationResumeDocumentID"
-    /><br />
-
-    <label for="JobApplicationJobID">Job ID:</label>
-    <input
-            type="text"
-            id="JobApplicationJobID"
-            name="JobApplicationJobID"
-    /><br />
-
-    <label for="JobApplicationApplicationDate">Application Date:</label>
-    <input
-            type="date"
-            id="JobApplicationApplicationDate"
-            name="JobApplicationApplicationDate"
-    /><br />
-
-    <label for="JobApplicationStatus">Job Application Status:</label>
-    <input
-            type="text"
-            id="JobApplicationStatus"
-            name="JobApplicationStatus"
-            value="Pending"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertJobApplication()" />
-</form>
-
-<h3>Add Job</h3>
-<form id="JobForm">
-    <label for="JobJobID">Job ID:</label>
-    <input type="number" id="JobJobID" name="JobJobID" /><br />
-
-    <label for="JobEmployerID">Employer ID:</label>
-    <input type="number" id="JobEmployerID" name="JobEmployerID" /><br />
-
-    <label for="JobStartDate">Start Date:</label>
-    <input type="date" id="JobStartDate" name="JobStartDate" /><br />
-
-    <label for="JobTitle">Title:</label>
-    <input type="text" id="JobTitle" name="JobTitle" /><br />
-
-    <label for="JobDescription">Job Description:</label>
-    <input type="text" id="JobDescription" name="JobDescription" /><br />
-
-    <label for="JobPositionLength">Position Length:</label>
-    <input
-            type="text"
-            id="JobPositionLength"
-            name="JobPositionLength"
-    /><br />
-
-    <label for="JobDesiredProgram">Desired Program:</label>
-    <input
-            type="text"
-            id="JobDesiredProgram"
-            name="JobDesiredProgram"
-    /><br />
-
-    <label for="JobSalary">Salary:</label>
-    <input type="text" id="JobSalary" name="JobSalary" /><br />
-
-    <input type="button" value="Create" onclick="insertJob()" />
-</form>
-
-<h3>Add Employer</h3>
-<form id="EmployerForm">
-    <label for="EmployerEmployerID">Employer ID:</label>
-    <input
-            type="number"
-            id="EmployerEmployerID"
-            name="EmployerEmployerID"
-    /><br />
-
-    <label for="EmployerEmployerName">Employer Name:</label>
-    <input
-            type="text"
-            id="EmployerEmployerName"
-            name="EmployerEmployerName"
-    /><br />
-
-    <label for="EmployerWebsite">Website:</label>
-    <input type="url" id="EmployerWebsite" name="EmployerWebsite" /><br />
-
-    <label for="EmployerHeadQuarterLocation">Head Quarter Location:</label>
-    <input
-            type="text"
-            id="EmployerHeadQuarterLocation"
-            name="EmployerHeadQuarterLocation"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertEmployer()" />
-</form>
-
-<h3>Add CompanyContact</h3>
-<form id="CompanyContactForm">
-    <label for="CompanyContactFirstName">First Name:</label>
-    <input
-            type="text"
-            id="CompanyContactFirstName"
-            name="CompanyContactFirstName"
-    /><br />
-
-    <label for="CompanyContactLastName">Last Name:</label>
-    <input
-            type="text"
-            id="CompanyContactLastName"
-            name="CompanyContactLastName"
-    /><br />
-
-    <label for="CompanyContactPhoneNumber">Phone Number:</label>
-    <input
-            type="tel"
-            id="CompanyContactPhoneNumber"
-            name="CompanyContactPhoneNumber"
-    /><br />
-
-    <label for="CompanyContactEmailAddress">Email Address:</label>
-    <input
-            type="email"
-            id="CompanyContactEmailAddress"
-            name="CompanyContactEmailAddress"
-    /><br />
-
-    <label for="CompanyContactEmployerID">Employer ID:</label>
-    <input
-            type="number"
-            id="CompanyContactEmployerID"
-            name="CompanyContactEmployerID"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertCompanyContact()" />
-</form>
-
-<h3>Add Cover Letter to Application</h3>
-<form id="AppContainsCoverLetterForm">
-    <label for="AppContainsCoverLetterApplicationID">Application ID:</label>
-    <input
-            type="number"
-            id="AppContainsCoverLetterApplicationID"
-            name="AppContainsCoverLetterApplicationID"
-    /><br />
-
-    <label for="AppContainsCoverLetterDocumentID">Document ID:</label>
-    <input
-            type="number"
-            id="AppContainsCoverLetterDocumentID"
-            name="AppContainsCoverLetterDocumentID"
-    /><br />
-
-    <input
-            type="button"
-            value="Create"
-            onclick="insertAppContainsCoverLetter()"
-    />
-</form>
-
-<h3>Add Student-Job Assignment</h3>
-<form id="StudentGetsJobForm">
-    <label for="StudentGetsJobStudentID">Student ID:</label>
-    <input
-            type="number"
-            id="StudentGetsJobStudentID"
-            name="StudentGetsJobStudentID"
-    /><br />
-
-    <label for="StudentGetsJobJobID">Job ID:</label>
-    <input
-            type="number"
-            id="StudentGetsJobJobID"
-            name="StudentGetsJobJobID"
-    /><br />
-
-    <label for="StudentGetsJobAcceptanceDate">Acceptance Date:</label>
-    <input
-            type="date"
-            id="StudentGetsJobAcceptanceDate"
-            name="StudentGetsJobAcceptanceDate"
-    /><br />
-
-    <label for="StudentGetsJobAcceptanceTime">Acceptance Time:</label>
-    <input
-            type="time"
-            id="StudentGetsJobAcceptanceTime"
-            name="StudentGetsJobAcceptanceTime"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertStudentGetsJob()" />
-</form>
-
-<h3>Add Student Interview</h3>
-<form id="StudentInterviewJobwCompanyContactForm">
-    <label for="StudentInterviewJobwCompanyContactStudentID">Student ID:</label>
-    <input type="number" id="StudentInterviewJobwCompanyContactStudentID" name="StudentInterviewJobwCompanyContactStudentID"><br>
-
-    <label for="StudentInterviewJobwCompanyContactJobID">Job ID:</label>
-    <input type="number" id="StudentInterviewJobwCompanyContactJobID" name="StudentInterviewJobwCompanyContactJobID"><br>
-
-    <label for="StudentInterviewJobwCompanyContactCompanyContactFirstName">Company Contact First Name:</label>
-    <input type="text" id="StudentInterviewJobwCompanyContactCompanyContactFirstName" name="StudentInterviewJobwCompanyContactCompanyContactFirstName"><br>
-    <label for="StudentInterviewJobwCompanyContactCompanyContactLastName">Company Contact Last Name:</label>
-    <input type="text" id="StudentInterviewJobwCompanyContactCompanyContactLastName" name="StudentInterviewJobwCompanyContactCompanyContactLastName"><br>
-
-    <label for="StudentInterviewJobwCompanyContactEmployerID">Employe ID:</label>
-    <input type="number" id="StudentInterviewJobwCompanyContactEmployerID" name="StudentInterviewJobwCompanyContactEmployerID"><br>
-
-    <label for="StudentInterviewJobwCompanyContactInterviewDate">Interview Date:</label>
-    <input type="date" id="StudentInterviewJobwCompanyContactInterviewDate" name="StudentInterviewJobwCompanyContactInterviewDate"><br>
-
-    <label for="StudentInterviewJobwCompanyContactInterviewTime">Interview Time:</label>
-    <input type="time" id="StudentInterviewJobwCompanyContactInterviewTime" name="StudentInterviewJobwCompanyContactInterviewTime"><br>
-
-    <label for="StudentInterviewJobwCompanyContactInterviewLocation">Interview Location:</label>
-    <input type="text" id="StudentInterviewJobwCompanyContactInterviewLocation" name="StudentInterviewJobwCompanyContactInterviewLocation"><br>
-
-    <input type="button" value="Create" onclick="insertStudentInterviewJobwCompanyContact()">
-</form>
-
+        <body>
+                <h3>Add New Coop-Advisor</h3>
+                <form id="CoopAdvisorForm">
+                <label for="CoopAdvisorAdvisorID">Advisor ID:</label>
+                <input
+                        type="number"
+                        id="CoopAdvisorAdvisorID"
+                        name="CoopAdvisorAdvisorID"
+                /><br />
+
+                <label for="CoopAdvisorFirstName">First Name:</label>
+                <input
+                        type="text"
+                        id="CoopAdvisorFirstName"
+                        name="CoopAdvisorFirstName"
+                /><br />
+
+                <label for="CoopAdvisorLastName">Last Name:</label>
+                <input
+                        type="text"
+                        id="CoopAdvisorLastName"
+                        name="CoopAdvisorLastName"
+                /><br />
+
+                <label for="CoopAdvisorEmailAddress">Email Address:</label>
+                <input
+                        type="email"
+                        id="CoopAdvisorEmailAddress"
+                        name="CoopAdvisorEmailAddress"
+                /><br />
+
+                <label for="CoopAdvisorPhoneNumber">Phone Number:</label>
+                <input
+                        type="tel"
+                        id="CoopAdvisorPhoneNumber"
+                        name="CoopAdvisorPhoneNumber"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertCoopAdvisor()" />
+                </form>
+
+                <h3>Add Student</h3>
+                <form id="StudentForm">
+                <label for="StudentStudentID">Student ID:</label>
+                <input
+                        type="number"
+                        id="StudentStudentID"
+                        name="StudentStudentID"
+                /><br />
+
+                <label for="StudentAdvisorID">Advisor ID:</label>
+                <input
+                        type="number"
+                        id="StudentAdvisorID"
+                        name="StudentAdvisorID"
+                /><br />
+
+                <label for="StudentFirstName">First Name:</label>
+                <input type="text" id="StudentFirstName" name="StudentFirstName" /><br />
+
+                <label for="StudentLastName">Last Name:</label>
+                <input type="text" id="StudentLastName" name="StudentLastName" /><br />
+
+                <label for="StudentEmail">Email:</label>
+                <input type="email" id="StudentEmail" name="StudentEmail" /><br />
+
+                <label for="StudentPhoneNumber">Phone Number:</label>
+                <input
+                        type="tel"
+                        id="StudentPhoneNumber"
+                        name="StudentPhoneNumber"
+                /><br />
+
+                <label for="StudentCurrentYear">Current Year:</label>
+                <input
+                        type="number"
+                        id="StudentCurrentYear"
+                        name="StudentCurrentYear"
+                /><br />
+
+                <label for="StudentNumberofCompletedTerms">Number of Completed Terms:</label>
+                <input
+                        type="number"
+                        id="StudentNumberofCompletedTerms"
+                        name="StudentNumberofCompletedTerms"
+                /><br />
+
+                <label for="StudentJobPreferences">Job Preferences:</label>
+                <input
+                        type="text"
+                        id="StudentJobPreferences"
+                        name="StudentJobPreferences"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertStudent()" />
+                </form>
+
+                <h3> Add Student Document</h3>
+                <form id="StudentDocumentForm">
+                <label for="StudentDocumentDocumentID">Document ID:</label>
+                <input
+                        type="number"
+                        id="StudentDocumentDocumentID"
+                        name="StudentDocumentDocumentID"
+                /><br />
+
+                <label for="StudentDocumentDocumentName">Document Name:</label>
+                <input
+                        type="text"
+                        id="StudentDocumentDocumentName"
+                        name="StudentDocumentDocumentName"
+                /><br />
+
+                <label for="StudentDocumentUploadDate">Upload Date:</label>
+                <input
+                        type="date"
+                        id="StudentDocumentUploadDate"
+                        name="StudentDocumentUploadDate"
+                /><br />
+
+                <label for="StudentDocumentUploadTime">Upload Time:</label>
+                <input
+                        type="time"
+                        id="StudentDocumentUploadTime"
+                        name="StudentDocumentUploadTime"
+                /><br />
+
+                <label for="StudentDocumentStudentID">Student ID:</label>
+                <input
+                        type="text"
+                        id="StudentDocumentStudentID"
+                        name="StudentDocumentStudentID"
+                /><br />
+
+                <label for="StudentDocumentType">Document Type:</label>
+
+                <select id="StudentDocumentType" name="StudentDocumentType" onchange="toggleJobContractForm()">
+                        <option value="" selected disabled>Select Document Type</option>
+                        <option value="Resume">Resume</option>
+                        <option value="CoverLetter">Cover Letter</option>
+                        <option value="JobContract">Job Contract</option>
+                </select><br />
+
+                <input type="button" value="Create" onclick="insertStudentDocument()" />
+                </form>
+
+
+                <div id="JobContractFormContainer" style="display: none;">
+                <h3>Add Job Contract</h3>
+                <form id="JobContractForm">
+
+                        <label for="JobContractDocumentID">Document ID:</label>
+                        <input
+                                type="number"
+                                id="JobContractDocumentID"
+                                name="JobContractDocumentID"
+                        /><br />
+
+                        <label for="JobContractStudentID">Student ID:</label>
+                        <input
+                                type="text"
+                                id="JobContractStudentID"
+                                name="JobContractStudentID"
+                        /><br />
+
+                        <label for="JobContractDatePosted">Date Posted:</label>
+                        <input
+                                type="date"
+                                id="JobContractDatePosted"
+                                name="JobContractDatePosted"
+                        /><br />
+
+                        <label for="JobContractTimePosted">Time Posted:</label>
+                        <input
+                                type="time"
+                                id="JobContractTimePosted"
+                                name="JobContractTimePosted"
+                        /><br />
+
+                        <label for="JobContractSalaryOffered">Salary Offered:</label>
+                        <input
+                                type="number"
+                                id="JobContractSalaryOffered"
+                                name="JobContractSalaryOffered"
+                        /><br />
+
+                        <label for="JobContractPositionOffered">Position Offered:</label>
+                        <input
+                                type="text"
+                                id="JobContractPositionOffered"
+                                name="JobContractPositionOffered"
+                        /><br />
+
+                        <label for="JobContractEmployerID">Employer ID:</label>
+                        <input
+                                type="text"
+                                id="JobContractEmployerID"
+                                name="JobContractEmployerID"
+                        /><br />
+                </form>
+                </div>
+
+                <h3>Add Job Application</h3>
+                <form id="JobApplicationForm">
+                <label for="JobApplicationApplicationID">Application ID:</label>
+                <input
+                        type="number"
+                        id="JobApplicationApplicationID"
+                        name="JobApplicationApplicationID"
+                /><br />
+
+                <label for="JobApplicationApplicationName">Application Name:</label>
+                <input
+                        type="text"
+                        id="JobApplicationApplicationName"
+                        name="JobApplicationApplicationName"
+                /><br />
+
+                <label for="JobApplicationStudentID">Student ID:</label>
+                <input
+                        type="text"
+                        id="JobApplicationStudentID"
+                        name="JobApplicationStudentID"
+                /><br />
+                <label for="JobApplicationResumeDocumentID">Resume Document ID:</label>
+                <input
+                        type="text"
+                        id="JobApplicationResumeDocumentID"
+                        name="JobApplicationResumeDocumentID"
+                /><br />
+
+                <label for="JobApplicationJobID">Job ID:</label>
+                <input
+                        type="text"
+                        id="JobApplicationJobID"
+                        name="JobApplicationJobID"
+                /><br />
+
+                <label for="JobApplicationApplicationDate">Application Date:</label>
+                <input
+                        type="date"
+                        id="JobApplicationApplicationDate"
+                        name="JobApplicationApplicationDate"
+                /><br />
+
+                <label for="JobApplicationStatus">Job Application Status:</label>
+                <input
+                        type="text"
+                        id="JobApplicationStatus"
+                        name="JobApplicationStatus"
+                        value="Pending"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertJobApplication()" />
+                </form>
+
+                <h3>Add Job</h3>
+                <form id="JobForm">
+                <label for="JobJobID">Job ID:</label>
+                <input type="number" id="JobJobID" name="JobJobID" /><br />
+
+                <label for="JobEmployerID">Employer ID:</label>
+                <input type="number" id="JobEmployerID" name="JobEmployerID" /><br />
+
+                <label for="JobStartDate">Start Date:</label>
+                <input type="date" id="JobStartDate" name="JobStartDate" /><br />
+
+                <label for="JobTitle">Title:</label>
+                <input type="text" id="JobTitle" name="JobTitle" /><br />
+
+                <label for="JobDescription">Job Description:</label>
+                <input type="text" id="JobDescription" name="JobDescription" /><br />
+
+                <label for="JobPositionLength">Position Length:</label>
+                <input
+                        type="text"
+                        id="JobPositionLength"
+                        name="JobPositionLength"
+                /><br />
+
+                <label for="JobDesiredProgram">Desired Program:</label>
+                <input
+                        type="text"
+                        id="JobDesiredProgram"
+                        name="JobDesiredProgram"
+                /><br />
+
+                <label for="JobSalary">Salary:</label>
+                <input type="text" id="JobSalary" name="JobSalary" /><br />
+
+                <input type="button" value="Create" onclick="insertJob()" />
+                </form>
+
+                <h3>Add Employer</h3>
+                <form id="EmployerForm">
+                <label for="EmployerEmployerID">Employer ID:</label>
+                <input
+                        type="number"
+                        id="EmployerEmployerID"
+                        name="EmployerEmployerID"
+                /><br />
+
+                <label for="EmployerEmployerName">Employer Name:</label>
+                <input
+                        type="text"
+                        id="EmployerEmployerName"
+                        name="EmployerEmployerName"
+                /><br />
+
+                <label for="EmployerWebsite">Website:</label>
+                <input type="url" id="EmployerWebsite" name="EmployerWebsite" /><br />
+
+                <label for="EmployerHeadQuarterLocation">Head Quarter Location:</label>
+                <input
+                        type="text"
+                        id="EmployerHeadQuarterLocation"
+                        name="EmployerHeadQuarterLocation"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertEmployer()" />
+                </form>
+
+                <h3>Add CompanyContact</h3>
+                <form id="CompanyContactForm">
+                <label for="CompanyContactFirstName">First Name:</label>
+                <input
+                        type="text"
+                        id="CompanyContactFirstName"
+                        name="CompanyContactFirstName"
+                /><br />
+
+                <label for="CompanyContactLastName">Last Name:</label>
+                <input
+                        type="text"
+                        id="CompanyContactLastName"
+                        name="CompanyContactLastName"
+                /><br />
+
+                <label for="CompanyContactPhoneNumber">Phone Number:</label>
+                <input
+                        type="tel"
+                        id="CompanyContactPhoneNumber"
+                        name="CompanyContactPhoneNumber"
+                /><br />
+
+                <label for="CompanyContactEmailAddress">Email Address:</label>
+                <input
+                        type="email"
+                        id="CompanyContactEmailAddress"
+                        name="CompanyContactEmailAddress"
+                /><br />
+
+                <label for="CompanyContactEmployerID">Employer ID:</label>
+                <input
+                        type="number"
+                        id="CompanyContactEmployerID"
+                        name="CompanyContactEmployerID"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertCompanyContact()" />
+                </form>
+
+                <h3>Add Cover Letter to Application</h3>
+                <form id="AppContainsCoverLetterForm">
+                <label for="AppContainsCoverLetterApplicationID">Application ID:</label>
+                <input
+                        type="number"
+                        id="AppContainsCoverLetterApplicationID"
+                        name="AppContainsCoverLetterApplicationID"
+                /><br />
+
+                <label for="AppContainsCoverLetterDocumentID">Document ID:</label>
+                <input
+                        type="number"
+                        id="AppContainsCoverLetterDocumentID"
+                        name="AppContainsCoverLetterDocumentID"
+                /><br />
+
+                <input
+                        type="button"
+                        value="Create"
+                        onclick="insertAppContainsCoverLetter()"
+                />
+                </form>
+
+                <h3>Add Student-Job Assignment</h3>
+                <form id="StudentGetsJobForm">
+                <label for="StudentGetsJobStudentID">Student ID:</label>
+                <input
+                        type="number"
+                        id="StudentGetsJobStudentID"
+                        name="StudentGetsJobStudentID"
+                /><br />
+
+                <label for="StudentGetsJobJobID">Job ID:</label>
+                <input
+                        type="number"
+                        id="StudentGetsJobJobID"
+                        name="StudentGetsJobJobID"
+                /><br />
+
+                <label for="StudentGetsJobAcceptanceDate">Acceptance Date:</label>
+                <input
+                        type="date"
+                        id="StudentGetsJobAcceptanceDate"
+                        name="StudentGetsJobAcceptanceDate"
+                /><br />
+
+                <label for="StudentGetsJobAcceptanceTime">Acceptance Time:</label>
+                <input
+                        type="time"
+                        id="StudentGetsJobAcceptanceTime"
+                        name="StudentGetsJobAcceptanceTime"
+                /><br />
+
+                <input type="button" value="Create" onclick="insertStudentGetsJob()" />
+                </form>
+
+                <h3>Add Student Interview</h3>
+                <form id="StudentInterviewJobwCompanyContactForm">
+                <label for="StudentInterviewJobwCompanyContactStudentID">Student ID:</label>
+                <input type="number" id="StudentInterviewJobwCompanyContactStudentID" name="StudentInterviewJobwCompanyContactStudentID"><br>
+
+                <label for="StudentInterviewJobwCompanyContactJobID">Job ID:</label>
+                <input type="number" id="StudentInterviewJobwCompanyContactJobID" name="StudentInterviewJobwCompanyContactJobID"><br>
+
+                <label for="StudentInterviewJobwCompanyContactCompanyContactFirstName">Company Contact First Name:</label>
+                <input type="text" id="StudentInterviewJobwCompanyContactCompanyContactFirstName" name="StudentInterviewJobwCompanyContactCompanyContactFirstName"><br>
+                <label for="StudentInterviewJobwCompanyContactCompanyContactLastName">Company Contact Last Name:</label>
+                <input type="text" id="StudentInterviewJobwCompanyContactCompanyContactLastName" name="StudentInterviewJobwCompanyContactCompanyContactLastName"><br>
+
+                <label for="StudentInterviewJobwCompanyContactEmployerID">Employe ID:</label>
+                <input type="number" id="StudentInterviewJobwCompanyContactEmployerID" name="StudentInterviewJobwCompanyContactEmployerID"><br>
+
+                <label for="StudentInterviewJobwCompanyContactInterviewDate">Interview Date:</label>
+                <input type="date" id="StudentInterviewJobwCompanyContactInterviewDate" name="StudentInterviewJobwCompanyContactInterviewDate"><br>
+
+                <label for="StudentInterviewJobwCompanyContactInterviewTime">Interview Time:</label>
+                <input type="time" id="StudentInterviewJobwCompanyContactInterviewTime" name="StudentInterviewJobwCompanyContactInterviewTime"><br>
+
+                <label for="StudentInterviewJobwCompanyContactInterviewLocation">Interview Location:</label>
+                <input type="text" id="StudentInterviewJobwCompanyContactInterviewLocation" name="StudentInterviewJobwCompanyContactInterviewLocation"><br>
+
+                <input type="button" value="Create" onclick="insertStudentInterviewJobwCompanyContact()">
+                </form>
+
+
+                <?php
+                        
+
+<<<<<<< HEAD:Client/index.html
+
+
+
+
+
+
+                ?>
+        </body>
+</html>
+=======
 <?php
 		//this tells the system that it's no longer just parsing html; it's now parsing PHP
 
@@ -684,3 +699,4 @@
         
 
 </html>
+>>>>>>> cb008d79f7693eb4601362ad3337a9a6c58b01c7:Client/placeholder.php

@@ -57,17 +57,31 @@
     <input type="submit" value="Create" name="insertCoopAdvisor"></p>
 </form>
 
-
-<h3>Project Student Attributes</h3>
+<h3>Selection</h3>
 <form method="GET" action="index.php">
-    <input type="hidden" name="studentProjectionRequest">
-    <label for="attributes">Attributes:</label>
-    <input type="text" id="attributes" name="attributes" required>
-    <br>
-    <label for="condition">Condition (optional):</label>
-    <input type="text" id="condition" name="condition">
-    <p><input type="submit" value="Project Attributes" name="projectAttributes"></p>
-</form>
+<input type="hidden" id ="selectionRequest" name = "selectionRequest">
+    <label for="selection">Select Attribute(s):</label>
+    <input
+            type="text"
+            id="Attribute"
+            name="Attribute"
+    /><br />
+
+    <label for="From">Select Table(s):</label>
+    <input
+            type="text"
+            id="Table"
+            name="Table"
+    /><br />
+
+    <label for="Where">Condition(s):</label>
+    <input
+            type="text"
+            id="Condition"
+            name="Condition"
+    /><br />
+
+    <input type="submit" value="Create" name="select"></p>
 
 
 <h3>Update New Coop-Advisor</h3>
@@ -195,6 +209,27 @@
     <p><input type="submit" value="Display Table" name="DisplayTable"></p>
 </form>
 
+<h3> Division </h3>
+<form method = "Get" action = "index.PHP">
+    <input type="hidden" id="divisionRequest" name="divisionRequest">
+    <label for="RelationA">RelationA:</label>
+    <input
+            type="text"
+            id="RelationA"
+            name="RelationA"
+    /><br />
+
+    <label for="RelationB">RelationB:</label>
+    <input
+            type="text"
+            id="RelationB"
+            name="RelationB"
+    /><br />
+
+    <p><input type="button" value="Create" name="Division"></p>
+
+</form>
+
 
 
 <?php
@@ -273,17 +308,23 @@
             }
         }
 
-        function printResult($result) { //prints results from a select statement
+        function printResult($result) { //prints results from a select statement 
             echo "<br>Retrieved data from table CoopAdvisor:<br>";
             echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                //echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
-                echo "<tr><td>" . $row["COOPADVISORADVISORID"] . "</td><td>" . $row["COOPADVISORFIRSTNAME"] . "</td><td>" . $row["COOPADVISORLASTNAME"] . "</td><td>" . $row["COOPADVISOREMAILADDRESS"] . "</td><td>" . $row["COOPADVISORPHONENUMBER"] . "</td></tr>";
+            echo "<tr>";
+            $numColumns = oci_num_fields($result);
+            for ($i = 0; $i <= $numColumns; $i++) {
+                echo "<th>" . oci_field_name($result, $i) . "</th>";
             }
-
-            echo "</table>";
+            echo "</tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>";
+                for ($i = 0; $i <= oci_num_fields($result); $i++) {
+                    echo "<td>" . $row[$i] . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>"; 
         }
 
         function debug_to_console($data) {
@@ -501,8 +542,8 @@
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (2, 'Emily', 'Anderson', 'emily.anderson@yahoo.com', '778-222-3333')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (3, 'Michael', 'Smith', 'michael.smith@hotmail.com', '236-555-6666')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (4, 'Sophia', 'Johnson', 'sophia.johnson@gmail.com', '604-888-9999')");
-          
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");
+
 
             executePlainSQL("INSERT INTO Student VALUES (1, 1, 'Nicholas', 'Fong', 'nicholas.fong@gmail.com', '604-222-4444', 3, 5, 'Software Engineering')");
             executePlainSQL("INSERT INTO Student VALUES (2, 2, 'Cole', 'Rowell', 'cole.rowell@gmail.com', '236-777-6666', 2, 3, 'Data Science')");
@@ -651,28 +692,6 @@
             displayCoopAdvisorTable();
         }
 
-
-        // DELETE THIS NOT NEEDED
-        function handleUpdateRequest() {
-                global $db_conn;
-    
-                $oldID = $_POST['OldCoopAdvisorID'];
-                $newID = $_POST['CoopAdvisorID'];
-                $oldFirstName = $_POST["OldCoopAdvisorFirstName"];
-                $newFirstName = $_POST["CoopAdvisorFirstName"];
-                $oldLastName = $_POST["OldCoopAdvisorLastName"];
-                $newLastName = $_POST["CoopAdvisorLastName"];
-                $oldEmail = $_POST["OldCoopAdvisorEmail"];
-                $newEmail = $_POST["CoopAdvisorEmail"];
-                $oldPhone = $_POST["OldCoopAdvisorPhoneNumber"];
-                $newPhone = $_POST["CoopAdvisorPhoneNumber"];
-
-    
-                // you need the wrap the old name and new name values with single quotations
-                executePlainSQL("UPDATE CoopAdvisor SET CoopAdvisorID='" . $newID . "' WHERE CoopAdvisorId='" . $oldID . "'");
-                OCICommit($db_conn);
-        }
-
         function handleCountRequest() {
                 global $db_conn;
     
@@ -685,70 +704,24 @@
 
         function handleDisplayRequest(){
             global $db_conn;
-
             $result = executePlainSQL("SELECT * FROM CoopAdvisor");
             printResult($result);
         }
 
 
-        function handleSelectionRequest() {
+        function handleSelectionRequest(){
             global $db_conn;
             $attribute = $_GET["Attribute"];
-            $table = $_GET["Table"]; 
+            $table = $_GET["Table"];
             $condition = $_GET["Condition"];
-            
-            executePlainSQL("SELECT CoopAdvisorAdvisorID FROM " . $table); 
-            if ($condition == "NONE") {
-                $result = executePlainSQL("SELECT " . $attribute . " FROM " . $table); 
-            } else {
-                $result = executePlainSQL("SELECT " . $attribute . " FROM " . $table . " WHERE " . $condition); 
+        
+            if ($condition == "NONE"){
+                $result = executePlainSQL("SELECT $attribute FROM $table");
+            } else{
+                $result = executePlainSQL("SELECT $attribute FROM $table WHERE $condition ");
             }
             printResult($result);
         }
-
-        function handleProjectionRequest() {
-            global $db_conn;
-        
-            if (isset($_GET['attributes'])) {
-                $attributes = $_GET['attributes'];
-                $attributesArray = explode(",", $attributes);
-                $selectClause = implode(", ", $attributesArray);
-        
-                $whereClause = "";
-                if (isset($_GET['condition']) && !empty($_GET['condition'])) {
-                    $condition = $_GET['condition'];
-                    $whereClause = " WHERE $condition";
-                }
-        
-                $query = "SELECT $selectClause FROM Student $whereClause";
-        
-                $stmt = oci_parse($db_conn, $query);
-                oci_execute($stmt);
-        
-                echo "<table border='1'>
-                    <tr>";
-                
-                foreach ($attributesArray as $attribute) {
-                    echo "<th>$attribute</th>";
-                }
-        
-                echo "</tr>";
-        
-                while ($row = oci_fetch_assoc($stmt)) {
-                    echo "<tr>";
-                    foreach ($attributesArray as $attribute) {
-                        echo "<td>" . $row[strtoupper($attribute)] . "</td>";
-                    }
-                    echo "</tr>";
-                }
-        
-                echo "</table>";
-            } else {
-                echo "Please provide attributes to project.";
-            }
-        }
-        
-      
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -774,7 +747,13 @@
             if (($row = oci_fetch_row($result)) !== false) {
                 echo "<br> The number of tuples in CoopAdvisor: " . $row[0] . "<br>";
             }
-        }    
+        }
+
+        function hdandleDivisionRequest(){
+
+        }
+        
+        
 
         
 
@@ -788,8 +767,10 @@
                     handleDisplayRequest();
                 } else if (array_key_exists("joinTableRequest", $_GET)) {
                     handlejoinTableRequest();
-                } else if(array_key_exists("studentProjectionRequest", $_GET)) {
-                    handleProjectionRequest();
+                } else if(array_key_exists("selectionRequest", $_GET)){
+                    handleSelectionRequest();
+                } else if(array_key_exists("divisionRequest", $_GET)){
+                    hdandleDivisionRequest();
                 }
                 
                 disconnectFromDB();
@@ -801,8 +782,6 @@
         } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"]) || isset($_GET["selectionRequest"])) {
             handleGETRequest();
         } else if (isset($_GET['joinTableRequest']) || isset($_GET["displayStudents"])) {
-            handleGETRequest();
-       } else if (isset($_GET['studentProjectionRequest']) || isset($_GET["projectAttributes"])) {
             handleGETRequest();
         }
 
