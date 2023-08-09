@@ -209,6 +209,27 @@
     <p><input type="submit" value="Display Table" name="DisplayTable"></p>
 </form>
 
+<h3> Division </h3>
+<form method = "Get" action = "index.PHP">
+    <input type="hidden" id="divisionRequest" name="divisionRequest">
+    <label for="RelationA">RelationA:</label>
+    <input
+            type="text"
+            id="RelationA"
+            name="RelationA"
+    /><br />
+
+    <label for="RelationB">RelationB:</label>
+    <input
+            type="text"
+            id="RelationB"
+            name="RelationB"
+    /><br />
+
+    <p><input type="button" value="Create" name="Division"></p>
+
+</form>
+
 
 
 <?php
@@ -287,17 +308,23 @@
             }
         }
 
-        function printResult($result) { //prints results from a select statement
+        function printResult($result) { //prints results from a select statement 
             echo "<br>Retrieved data from table CoopAdvisor:<br>";
             echo "<table>";
-            echo "<tr><th>ID</th><th>Name</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                //echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
-                echo "<tr><td>" . $row["COOPADVISORADVISORID"] . "</td><td>" . $row["COOPADVISORFIRSTNAME"] . "</td><td>" . $row["COOPADVISORLASTNAME"] . "</td><td>" . $row["COOPADVISOREMAILADDRESS"] . "</td><td>" . $row["COOPADVISORPHONENUMBER"] . "</td></tr>";
+            echo "<tr>";
+            $numColumns = oci_num_fields($result);
+            for ($i = 0; $i <= $numColumns; $i++) {
+                echo "<th>" . oci_field_name($result, $i) . "</th>";
             }
-
-            echo "</table>";
+            echo "</tr>";
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>";
+                for ($i = 0; $i <= oci_num_fields($result); $i++) {
+                    echo "<td>" . $row[$i] . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>"; 
         }
 
         function debug_to_console($data) {
@@ -516,9 +543,6 @@
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (3, 'Michael', 'Smith', 'michael.smith@hotmail.com', '236-555-6666')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (4, 'Sophia', 'Johnson', 'sophia.johnson@gmail.com', '604-888-9999')");
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");
-          
-            executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");
-
 
 
             executePlainSQL("INSERT INTO Student VALUES (1, 1, 'Nicholas', 'Fong', 'nicholas.fong@gmail.com', '604-222-4444', 3, 5, 'Software Engineering')");
@@ -668,28 +692,6 @@
             displayCoopAdvisorTable();
         }
 
-
-        // DELETE THIS NOT NEEDED
-        function handleUpdateRequest() {
-                global $db_conn;
-    
-                $oldID = $_POST['OldCoopAdvisorID'];
-                $newID = $_POST['CoopAdvisorID'];
-                $oldFirstName = $_POST["OldCoopAdvisorFirstName"];
-                $newFirstName = $_POST["CoopAdvisorFirstName"];
-                $oldLastName = $_POST["OldCoopAdvisorLastName"];
-                $newLastName = $_POST["CoopAdvisorLastName"];
-                $oldEmail = $_POST["OldCoopAdvisorEmail"];
-                $newEmail = $_POST["CoopAdvisorEmail"];
-                $oldPhone = $_POST["OldCoopAdvisorPhoneNumber"];
-                $newPhone = $_POST["CoopAdvisorPhoneNumber"];
-
-    
-                // you need the wrap the old name and new name values with single quotations
-                executePlainSQL("UPDATE CoopAdvisor SET CoopAdvisorID='" . $newID . "' WHERE CoopAdvisorId='" . $oldID . "'");
-                OCICommit($db_conn);
-        }
-
         function handleCountRequest() {
                 global $db_conn;
     
@@ -702,7 +704,6 @@
 
         function handleDisplayRequest(){
             global $db_conn;
-
             $result = executePlainSQL("SELECT * FROM CoopAdvisor");
             printResult($result);
         }
@@ -747,6 +748,10 @@
                 echo "<br> The number of tuples in CoopAdvisor: " . $row[0] . "<br>";
             }
         }
+
+        function hdandleDivisionRequest(){
+
+        }
         
         
 
@@ -764,6 +769,8 @@
                     handlejoinTableRequest();
                 } else if(array_key_exists("selectionRequest", $_GET)){
                     handleSelectionRequest();
+                } else if(array_key_exists("divisionRequest", $_GET)){
+                    hdandleDivisionRequest();
                 }
                 
                 disconnectFromDB();
