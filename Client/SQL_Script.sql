@@ -26,6 +26,7 @@ CREATE TABLE Student (
     AdvisorID INTEGER NOT NULL,
     FirstName CHAR(40),
     LastName CHAR(40),
+    Age INTEGER,
     Email CHAR(40),
     PhoneNumber CHAR(20),
     CurrentYear INTEGER,
@@ -74,7 +75,7 @@ CREATE TABLE JobContract (
     PositionOffered CHAR(20),
     EmployerID INTEGER NOT NULL, 
     PRIMARY KEY (DocumentID),
-    FOREIGN KEY (EmployerID) REFERENCES Employer (EmployerID) 
+    FOREIGN KEY (EmployerID) REFERENCES Employer (EmployerID),
     FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE
 );
 
