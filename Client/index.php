@@ -631,7 +631,34 @@
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
             VALUES (8, 'Cole_Rowell_App', 2, 2, 5, DATE '2023-07-27')");
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-            VALUES (9, 'Cole_Rowell_App', 2, 2, 1, DATE '2023-07-27')");
+            VALUES (9, 'Cole_Rowell_App', 2, 2, 1, DATE '2023-07-27')");	
+		
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (10, 'Nicholas_Fong_App', 1, 1, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (11, 'Nicholas_Fong_App', 1, 1, 3, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (12, 'Nicholas_Fong_App', 1, 1, 4, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (13, 'Nicholas_Fong_App', 1, 1, 5, DATE '2023-07-27')");
+
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (14, 'Anikait_Kapur_App', 3, 3, 1, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (15, 'Anikait_Kapur_App', 3, 3, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (16, 'Anikait_Kapur_App', 3, 3, 4, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (17, 'Anikait_Kapur_App', 3, 3, 5, DATE '2023-07-27')");
+
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (18, 'John_Doe_App', 4, 4, 1, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (19, 'John_Doe_App', 4, 4, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (20, 'John_Doe_App', 4, 4, 3, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (21, 'John_Doe_App', 4, 4, 5, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (1, 6)");
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (2, 7)");
