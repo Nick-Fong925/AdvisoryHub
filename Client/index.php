@@ -160,16 +160,22 @@
     <p><input type="submit" value="Count Tuples" name="countTuples"></p>
 </form>
 
-<h3> Display CoopAdvisorTable</h3>
+<h3> Display CoopAdvisor Table</h3>
 <form method="Get" action="index.php">
     <input type="hidden" id="displayTableRequest" name="displayTableRequest">
     <p><input type="submit" value="Display Table" name="DisplayTable"></p>
 </form>
 
+<h3> Display Student Table</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" id="displayStudentRequest" name="displayStudentRequest">
+    <p><input type="submit" value="Display Student" name="displayStudent"></p>
+</form>
+
 <h3>Division</h3>
 <form method="GET" action="index.php">
     <input type="hidden" id ="divisionRequest" name = "divisionRequest">
-    <p><input type="submit" value="Create" name="division"></p>
+    <p><input type="submit" value="Perform" name="division"></p>
 </form>
 
 <h3>Find Advisors with Student Count More Than:</h3>
@@ -607,6 +613,12 @@
             executePlainSQL("INSERT INTO Employer VALUES (3, 'TechCorp', 'www.techcorp.com', 'Seattle')");
             executePlainSQL("INSERT INTO Employer VALUES (4, 'Data Solutions', 'www.datasolutions.com', 'Chicago')");
             executePlainSQL("INSERT INTO Employer VALUES (5, 'WebDev Pro', 'www.webdevpro.com', 'Austin')");
+	
+	    executePlainSQL("INSERT INTO JobContract VALUES (1, 1, TO_DATE('2023-07-27', 'YYYY-MM-DD'), TO_TIMESTAMP('09:30:00', 'HH24:MI:SS'), 60000, 'Software Developer', 1)");
+            executePlainSQL("INSERT INTO JobContract VALUES (2, 2, TO_DATE('2023-02-10', 'YYYY-MM-DD'), TO_TIMESTAMP('10:15:00', 'HH24:MI:SS'), 80000, 'Data Analyst', 2)");
+            executePlainSQL("INSERT INTO JobContract VALUES (3, 3, TO_DATE('2023-05-12', 'YYYY-MM-DD'), TO_TIMESTAMP('18:00:00', 'HH24:MI:SS'), 75000, 'Product Manager', 3)");
+            executePlainSQL("INSERT INTO JobContract VALUES (4, 4, TO_DATE('2022-12-03', 'YYYY-MM-DD'), TO_TIMESTAMP('23:00:00', 'HH24:MI:SS'), 50000, 'Business Analyst', 4)");
+            executePlainSQL("INSERT INTO JobContract VALUES (5, 5, TO_DATE('2023-08-07', 'YYYY-MM-DD'), TO_TIMESTAMP('01:00:00', 'HH24:MI:SS'), 90000, 'Web Developer', 5)");
 
             executePlainSQL("INSERT INTO Job (JobID, EmployerID, StartDate, Title, JobDescription, PositionLength, DesiredProgram, Salary)
             VALUES (1, 1, DATE '2023-08-15', 'Software Developer', 'Developing web applications', '6 months', 'Computer Science', '$60,000')");
@@ -650,7 +662,34 @@
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
             VALUES (8, 'Cole_Rowell_App', 2, 2, 5, DATE '2023-07-27')");
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-            VALUES (9, 'Cole_Rowell_App', 2, 2, 1, DATE '2023-07-27')");
+            VALUES (9, 'Cole_Rowell_App', 2, 2, 1, DATE '2023-07-27')");	
+		
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (10, 'Nicholas_Fong_App', 1, 1, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (11, 'Nicholas_Fong_App', 1, 1, 3, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (12, 'Nicholas_Fong_App', 1, 1, 4, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (13, 'Nicholas_Fong_App', 1, 1, 5, DATE '2023-07-27')");
+
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (14, 'Anikait_Kapur_App', 3, 3, 1, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (15, 'Anikait_Kapur_App', 3, 3, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (16, 'Anikait_Kapur_App', 3, 3, 4, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (17, 'Anikait_Kapur_App', 3, 3, 5, DATE '2023-07-27')");
+
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (18, 'John_Doe_App', 4, 4, 1, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (19, 'John_Doe_App', 4, 4, 2, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (20, 'John_Doe_App', 4, 4, 3, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (21, 'John_Doe_App', 4, 4, 5, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (1, 6)");
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (2, 7)");
@@ -701,7 +740,7 @@
             OCICommit($db_conn);
         
             // Display the updated Co-op advisor table
-            displayCoopAdvisorTable();
+            handleDisplayRequest();
         }
 
         function handleCountRequest() {
@@ -764,11 +803,24 @@
             }
         }
 
-    
-        
-        
+        function printStudentResult($result) { //prints results from a select statement
+            echo "<br>Retrieved data from table CoopAdvisor:<br>";
+            echo "<table>";
+            echo "<tr><th>Student ID</th><th>Advisor ID</th><th>First Name</th><th>Last Name</th><th>Age</th><th>Email Address</th><th>Phone Number</th><th>Current Year</th><th>Number of Completed Terms</th><th>Job Preferences</th></tr>";
 
-        
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td><td>" . $row[6] . "</td><td>" . $row[7] . "</td><td>" . $row[8] . "</td><td>" . $row[9] . "</td></tr>";
+            }
+
+            echo "</table>";
+        }
+
+        function handleStudentRequest(){
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT * FROM Student");
+            printStudentResult($result);
+        }
 
                
         function handleGETRequest() {
@@ -791,8 +843,10 @@
                     handleAggregationWithGroupBy();
                 } else if(array_key_exists("divisionRequest", $_GET)){
                     handleDivisionRequest();
+                } else if (array_key_exists("displayStudent", $_GET)){
+                    handleStudentRequest();
                 }
-                
+
                 disconnectFromDB();
             }
         }
@@ -812,6 +866,8 @@
         } else if (isset($_GET["nestedAggregationWithGroupByRequest"]) || isset($_GET["aggregationWithGroupByRequest"])) {
             handleGETRequest();
         } else if (isset($_GET["divisionRequest"]) || isset($_GET["division"])) {
+            handleGETRequest();
+        } else if (isset($_GET["displayStudentRequest"])){
             handleGETRequest();
         } 
        
@@ -968,6 +1024,7 @@
             OCICommit($db_conn);
 
             handleDisplayRequest();
+            handleStudentRequest();
         }
 
         function handleAggregationWithGroupBy(){
@@ -990,7 +1047,7 @@
 
         function handleDivisionRequest(){
             global $db_conn;
-            echo "<br>Number of Students per Co-op Advisor:<br>";
+            echo "<br>IDs of Students Who Applied to All Jobs:<br>";
             $result = executePlainSQL("SELECT StudentID
             FROM Student
             WHERE NOT EXISTS (
