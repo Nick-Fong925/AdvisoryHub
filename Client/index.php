@@ -582,6 +582,12 @@
             executePlainSQL("INSERT INTO Employer VALUES (3, 'TechCorp', 'www.techcorp.com', 'Seattle')");
             executePlainSQL("INSERT INTO Employer VALUES (4, 'Data Solutions', 'www.datasolutions.com', 'Chicago')");
             executePlainSQL("INSERT INTO Employer VALUES (5, 'WebDev Pro', 'www.webdevpro.com', 'Austin')");
+	
+	    executePlainSQL("INSERT INTO JobContract VALUES (1, 1, TO_DATE('2023-07-27', 'YYYY-MM-DD'), TO_TIMESTAMP('09:30:00', 'HH24:MI:SS'), 60000, 'Software Developer', 1)");
+            executePlainSQL("INSERT INTO JobContract VALUES (2, 2, TO_DATE('2023-02-10', 'YYYY-MM-DD'), TO_TIMESTAMP('10:15:00', 'HH24:MI:SS'), 80000, 'Data Analyst', 2)");
+            executePlainSQL("INSERT INTO JobContract VALUES (3, 3, TO_DATE('2023-05-12', 'YYYY-MM-DD'), TO_TIMESTAMP('18:00:00', 'HH24:MI:SS'), 75000, 'Product Manager', 3)");
+            executePlainSQL("INSERT INTO JobContract VALUES (4, 4, TO_DATE('2022-12-03', 'YYYY-MM-DD'), TO_TIMESTAMP('23:00:00', 'HH24:MI:SS'), 50000, 'Business Analyst', 4)");
+            executePlainSQL("INSERT INTO JobContract VALUES (5, 5, TO_DATE('2023-08-07', 'YYYY-MM-DD'), TO_TIMESTAMP('01:00:00', 'HH24:MI:SS'), 90000, 'Web Developer', 5)");
 
             executePlainSQL("INSERT INTO Job (JobID, EmployerID, StartDate, Title, JobDescription, PositionLength, DesiredProgram, Salary)
             VALUES (1, 1, DATE '2023-08-15', 'Software Developer', 'Developing web applications', '6 months', 'Computer Science', '$60,000')");
