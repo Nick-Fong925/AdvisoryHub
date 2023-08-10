@@ -1023,7 +1023,7 @@
 
         function handleDivisionRequest(){
             global $db_conn;
-            echo "<br>Number of Students per Co-op Advisor:<br>";
+            echo "<br>Students who applied to all jobs:<br>";
             $result = executePlainSQL("SELECT StudentID
             FROM Student
             WHERE NOT EXISTS (
