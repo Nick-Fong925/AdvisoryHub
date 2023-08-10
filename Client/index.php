@@ -343,10 +343,35 @@
             $newEmail = $_POST["CoopAdvisorEmailAddress"];
             $newPhone = $_POST["CoopAdvisorPhoneNumber"];
 
-
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE CoopAdvisor SET CoopAdvisorFirstName='" .$newFirstName . "', CoopAdvisorLastName='" .$newLastName ."', CoopAdvisorEmailAddress='" .$newEmail . "', CoopAdvisorPhoneNumber='" . $newPhone ."' WHERE CoopAdvisorAdvisorID='" . $newID . "'");
+            if ($newID == ""){
+                echo "Please input Advisor ID";
+            } else{
+                if(empty($newFirstName)){
+                    $result = executePlainSQL("SELECT CoopAdvisorFirstName FROM CoopAdvisor WHERE CoopAdvisorAdvisorID=" . $newID);
+                    $row = OCI_Fetch_Array($result, OCI_BOTH);
+                    $newFirstName = $row[0]; 
+                } 
+                 if (empty($newEmail)){
+                    $result = executePlainSQL("SELECT CoopAdvisorEmailAddress FROM CoopAdvisor WHERE CoopAdvisorAdvisorID=" . $newID);
+                    $row = OCI_Fetch_Array($result, OCI_BOTH);
+                    $newEmail = $row[0];
+                }
+                if (empty($newLastName)){
+                    $result = executePlainSQL("SELECT CoopAdvisorLastName FROM CoopAdvisor WHERE CoopAdvisorAdvisorID=" . $newID);
+                    $row = OCI_Fetch_Array($result, OCI_BOTH);
+                    $newLastName = $row[0];
+                }
+                if (empty($newPhone)){
+                    $result = executePlainSQL("SELECT CoopAdvisorPhoneNumber FROM CoopAdvisor WHERE CoopAdvisorAdvisorID=" . $newID);
+                    $row = OCI_Fetch_Array($result, OCI_BOTH);
+                    $newPhone = $row[0];
+                } 
+                // you need the wrap the old name and new name values with single quotations
+                executePlainSQL("UPDATE CoopAdvisor SET CoopAdvisorFirstName='" .$newFirstName . "', CoopAdvisorLastName='" .$newLastName ."', CoopAdvisorEmailAddress='" .$newEmail . "', CoopAdvisorPhoneNumber='" . $newPhone ."' WHERE CoopAdvisorAdvisorID='" . $newID . "'");
+                handleDisplayRequest();
+            }
             OCICommit($db_conn);
+
         }
 
         function handleResetRequest() {
@@ -775,7 +800,6 @@
         if (isset($_POST['reset']) || isset($_POST['insertCoopAdvisor']) || isset($_POST["deleteCoopAdvisor"]) ) {
             handlePOSTRequest();
         } else if (isset($_POST["updateCoopAdvisorRequest"]) || isset($_POST["updateCoopAdvisor"])) {
-            echo 'hello';
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"]) || isset($_GET["selectionRequest"])) {
             handleGETRequest();
