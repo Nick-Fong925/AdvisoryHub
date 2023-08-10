@@ -4,6 +4,8 @@
     <title></title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
 </head>
 <body>
 <h3>Reset</h3>
@@ -55,6 +57,19 @@
     <input type="submit" value="Create" name="insertCoopAdvisor"></p>
 </form>
 
+<h3>Delete Coop Advisor</h3>
+<form method ="POST" action="index.php">
+    <input type="hidden" id ="deleteCoopAdvisorRequest" name = "deleteCoopAdvisorRequest">
+    <label for="CoopAdvisorAdvisorID">Advisor ID:</label>
+    <input
+            type="number"
+            id="CoopAdvisorAdvisorID"
+            name="CoopAdvisorAdvisorID"
+    /><br />
+    <p><input type="submit" value="Delete" name="deleteCoopAdvisor"></p>
+</form>
+
+
 <h3>Selection</h3>
 <form method="GET" action="index.php">
 <input type="hidden" id ="selectionRequest" name = "selectionRequest">
@@ -80,6 +95,7 @@
     /><br />
 
     <input type="submit" value="Create" name="select"></p>
+</form>
 
 
 <h3>Update New Coop-Advisor</h3>
@@ -129,63 +145,6 @@
 
 
 
-<h3>Add Student</h3>
-<form method ="POST" action="index.php">
-<input type="hidden" id ="insertStudentRequest" name = "insertStudentRequest">
-    <label for="StudentStudentID">Student ID:</label>
-    <input
-            type="number"
-            id="StudentStudentID"
-            name="StudentStudentID"
-    /><br />
-
-    <label for="StudentAdvisorID">Advisor ID:</label>
-    <input
-            type="number"
-            id="StudentAdvisorID"
-            name="StudentAdvisorID"
-    /><br />
-
-    <label for="StudentFirstName">First Name:</label>
-    <input type="text" id="StudentFirstName" name="StudentFirstName" /><br />
-
-    <label for="StudentLastName">Last Name:</label>
-    <input type="text" id="StudentLastName" name="StudentLastName" /><br />
-
-    <label for="StudentEmail">Email:</label>
-    <input type="email" id="StudentEmail" name="StudentEmail" /><br />
-
-    <label for="StudentPhoneNumber">Phone Number:</label>
-    <input
-            type="tel"
-            id="StudentPhoneNumber"
-            name="StudentPhoneNumber"
-    /><br />
-
-    <label for="StudentCurrentYear">Current Year:</label>
-    <input
-            type="number"
-            id="StudentCurrentYear"
-            name="StudentCurrentYear"
-    /><br />
-
-    <label for="StudentNumberofCompletedTerms">Number of Completed Terms:</label>
-    <input
-            type="number"
-            id="StudentNumberofCompletedTerms"
-            name="StudentNumberofCompletedTerms"
-    /><br />
-
-    <label for="StudentJobPreferences">Job Preferences:</label>
-    <input
-            type="text"
-            id="StudentJobPreferences"
-            name="StudentJobPreferences"
-    /><br />
-
-    <input type="button" value="Create" onclick="insertStudent()" />
-</form>
-
 <h3>Display Students Advised by Co-op Advisor</h3>
 <form method="GET" action="index.php">
     <input type="hidden" name="joinTableRequest">
@@ -207,25 +166,10 @@
     <p><input type="submit" value="Display Table" name="DisplayTable"></p>
 </form>
 
-<h3> Division </h3>
-<form method = "Get" action = "index.PHP">
-    <input type="hidden" id="divisionRequest" name="divisionRequest">
-    <label for="RelationA">RelationA:</label>
-    <input
-            type="text"
-            id="RelationA"
-            name="RelationA"
-    /><br />
-
-    <label for="RelationB">RelationB:</label>
-    <input
-            type="text"
-            id="RelationB"
-            name="RelationB"
-    /><br />
-
-    <p><input type="button" value="Create" name="Division"></p>
-
+<h3>Division</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" id ="divisionRequest" name = "divisionRequest">
+    <p><input type="submit" value="Create" name="division"></p>
 </form>
 
 <h3>Find Advisors with Student Count More Than:</h3>
@@ -249,6 +193,17 @@
 
 
 
+<h3>Nested Aggregation with Group By</h3>
+<form method ="GET" action="index.php">
+    <input type="hidden" id ="nestedAggregationWithGroupByRequest" name = "nestedAggregationWithGroupByRequest">
+    <p><input type="submit" value="Perform" name="nestedAggregationWithGroupBy"></p>
+</form>
+
+<h3>Aggregation with Group By</h3>
+<form method ="GET" action="index.php">
+    <input type="hidden" id ="aggregationWithGroupByRequest" name = "aggregationWithGroupByRequest">
+    <p><input type="submit" value="Perform" name="aggregationWithGroupBy"></p>
+</form>
 
 
 <?php
@@ -328,7 +283,7 @@
         }
 
         function printResult($result) { //prints results from a select statement 
-            echo "<br>Retrieved data from table CoopAdvisor:<br>";
+
             echo "<table>";
             echo "<tr>";
             $numColumns = oci_num_fields($result);
@@ -428,35 +383,37 @@
                 AdvisorID INTEGER NOT NULL,
                 FirstName CHAR(40),
                 LastName CHAR(40),
+                Age INTEGER,
                 Email CHAR(40),
                 PhoneNumber CHAR(20),
                 CurrentYear INTEGER,
                 NumberofCompletedTerms INTEGER,
                 JobPreferences CHAR(100),
                 PRIMARY KEY (StudentID), 
-                FOREIGN KEY (AdvisorID) REFERENCES CoopAdvisor)");
+                FOREIGN KEY (AdvisorID) REFERENCES CoopAdvisor(CoopAdvisorAdvisorID) ON DELETE CASCADE)"
+            );
                 
             executePlainSQL("CREATE TABLE StudentDocument (
                 DocumentID INTEGER,
                 DocumentName CHAR(30),
                 UploadDate DATE,
-                UploadTime TIMESTAMP, -- Use TIMESTAMP data type instead of TIME
+                UploadTime TIMESTAMP, 
                 StudentID INTEGER NOT NULL,
                 PRIMARY KEY(DocumentID),
-                FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE
             )");
 
             executePlainSQL("CREATE TABLE Resumé (
                 DocumentID INTEGER,
                 PRIMARY KEY(DocumentID),
-                FOREIGN KEY (DocumentID) REFERENCES StudentDocument
+                FOREIGN KEY (DocumentID) REFERENCES StudentDocument ON DELETE CASCADE
             )");
   
 
             executePlainSQL("CREATE TABLE CoverLetter (
                 DocumentID INTEGER,
                 PRIMARY KEY (DocumentID),
-                FOREIGN KEY (DocumentID) REFERENCES StudentDocument (DocumentID)
+                FOREIGN KEY (DocumentID) REFERENCES StudentDocument (DocumentID) ON DELETE CASCADE
             )");
 
 
@@ -471,15 +428,17 @@
 
             executePlainSQL("CREATE TABLE JobContract (
                 DocumentID INTEGER,
-                StudentID CHAR(20),
+                StudentID INTEGER,
                 DatePosted DATE,
                 TimePosted TIMESTAMP,
                 SalaryOffered INTEGER,
                 PositionOffered CHAR(20),
-                EmployerID INTEGER NOT NULL, 
+                EmployerID INTEGER NOT NULL,
                 PRIMARY KEY (DocumentID),
-                FOREIGN KEY (EmployerID) REFERENCES Employer (EmployerID))");
-           
+                FOREIGN KEY (EmployerID) REFERENCES Employer(EmployerID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE
+            )");
+                    
 
             executePlainSQL("CREATE TABLE Job (
                 JobID INTEGER,
@@ -504,8 +463,8 @@
                 ApplicationDate DATE,
                 JobApplicationStatus CHAR(20) DEFAULT 'Pending',
                 PRIMARY KEY (ApplicationID),
-                FOREIGN KEY (StudentID) REFERENCES Student (StudentID),
-                FOREIGN KEY (ResumeDocumentID) REFERENCES Resumé (DocumentID), 
+                FOREIGN KEY (StudentID) REFERENCES Student (StudentID) ON DELETE CASCADE,
+                FOREIGN KEY (ResumeDocumentID) REFERENCES Resumé (DocumentID) ON DELETE CASCADE, 
                 FOREIGN KEY (JobID) REFERENCES Job (JobID)
             )");
 
@@ -525,8 +484,8 @@
                 ApplicationID INTEGER,
                 DocumentID INTEGER,
                 PRIMARY KEY (ApplicationID, DocumentID),
-                FOREIGN KEY (ApplicationID) REFERENCES JobApplication (ApplicationID),
-                FOREIGN KEY (DocumentID) REFERENCES CoverLetter (DocumentID)
+                FOREIGN KEY (ApplicationID) REFERENCES JobApplication (ApplicationID) ON DELETE CASCADE,
+                FOREIGN KEY (DocumentID) REFERENCES CoverLetter (DocumentID) ON DELETE CASCADE
             )");
 
 
@@ -536,7 +495,7 @@
                 AcceptanceDate DATE,
                 AcceptanceTime TIMESTAMP, 
                 PRIMARY KEY (StudentID, JobID),
-                FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+                FOREIGN KEY (StudentID) REFERENCES Student(StudentID) ON DELETE CASCADE,
                 FOREIGN KEY (JobID) REFERENCES Job(JobID)
             )");
     
@@ -552,7 +511,7 @@
                     InterviewLocation CHAR(50),
                     PRIMARY KEY (StudentID, JobID, CompanyContactFirstName, CompanyContactLastName, EmployerID),
                     FOREIGN KEY (JobID) REFERENCES Job (JobID),
-                    FOREIGN KEY (StudentID) REFERENCES Student (StudentID),
+                    FOREIGN KEY (StudentID) REFERENCES Student (StudentID) ON DELETE CASCADE,
                     FOREIGN KEY (CompanyContactFirstName, EmployerID) REFERENCES CompanyContact (FirstName, EmployerID)
                 )");
 
@@ -564,26 +523,26 @@
             executePlainSQL("INSERT INTO CoopAdvisor VALUES (5, 'Daniel', 'Lee', 'daniel.lee@yahoo.com', '778-111-2222')");
 
 
-            executePlainSQL("INSERT INTO Student VALUES (1, 1, 'Nicholas', 'Fong', 'nicholas.fong@gmail.com', '604-222-4444', 3, 5, 'Software Engineering')");
-            executePlainSQL("INSERT INTO Student VALUES (2, 2, 'Cole', 'Rowell', 'cole.rowell@gmail.com', '236-777-6666', 2, 3, 'Data Science')");
-            executePlainSQL("INSERT INTO Student VALUES (3, 3, 'Anikait', 'Kapur', 'anikait.kapur@hotmail.com', '778-101-9999', 4, 1, 'Product Management')");
-            executePlainSQL("INSERT INTO Student VALUES (4, 4, 'John', 'Doe', 'john.doe@gmail.com', '236-202-1111', 1, 1, 'Business Analysis')");
-            executePlainSQL("INSERT INTO Student VALUES (5, 2, 'Jane', 'Smith', 'jane.smith@gmail.com', '778-212-2222', 2, 3, 'Web Development')");
-            executePlainSQL("INSERT INTO Student VALUES (6, 1, 'Nate', 'Diaz', 'nate.diaz@yahoo.com', '604-333-3333', 4, 0, 'Chemical Engineering')");
-            executePlainSQL("INSERT INTO Student VALUES (7, 2, 'Nick', 'Diaz', 'nick.diaz@gmail.com', '604-333-6666', 2, 1, 'Mechanical Engineering')");
-            executePlainSQL("INSERT INTO Student VALUES (8, 2, 'Jake', 'Paul', 'jake.paul@gmail.com', '604-111-1111', 3, 3, 'Machine Learning')");
-            executePlainSQL("INSERT INTO Student VALUES (9, 3, 'Robert', 'Johnson', 'robert.johnson@yahoo.com', '778-987-6543', 2, 4, 'Finance')");
-            executePlainSQL("INSERT INTO Student VALUES (10, 4, 'Sarah', 'Williams', 'sarah.williams@gmail.com', '778-888-8888', 1, 2, 'Marketing')");
-            executePlainSQL("INSERT INTO Student VALUES (11, 1, 'Michael', 'Brown', 'michael.brown@gmail.com', '236-555-5555', 2, 3, 'Accounting')");
-            executePlainSQL("INSERT INTO Student VALUES (12, 3, 'Sophia', 'Taylor', 'sophia.taylor@yahoo.com', '604-666-2222', 4, 2, 'Electrical Engineering')");
-            executePlainSQL("INSERT INTO Student VALUES (13, 4, 'James', 'Wilson', 'james.wilson@gmail.com', '236-777-4444', 2, 1, 'Renewable Energy')");
-            executePlainSQL("INSERT INTO Student VALUES (14, 2, 'Olivia', 'Martin', 'olivia.martin@hotmail.com', '778-222-1111', 3, 4, 'Human Resources')");
-            executePlainSQL("INSERT INTO Student VALUES (15, 2, 'Ethan', 'Chen', 'ethan.chen@gmail.com', '236-666-7777', 4, 2, 'Web Development')");
-            executePlainSQL("INSERT INTO Student VALUES (16, 3, 'Liam', 'Lee', 'liam.lee@yahoo.com', '778-123-4567', 3, 0, 'Data Analysis')");
-            executePlainSQL("INSERT INTO Student VALUES (17, 2, 'Emma', 'Dean', 'emma.dean@gmail.com', '604-623-6478', 2, 1, 'Sales')");
-            executePlainSQL("INSERT INTO Student VALUES (18, 1, 'Norah', 'Wong', 'norah.wong@yahoo.com', '604-518-5235', 1, 2, 'Accounting')");
-            executePlainSQL("INSERT INTO Student VALUES (19, 4, 'Ethan', 'Thompson', 'ethan.thompson@hotmail.com', '778-314-5912', 2, 0, 'Data Science')");
-            executePlainSQL("INSERT INTO Student VALUES (20, 3, 'Bruce', 'Klein', 'bruce.klein@email.com', '604-475-9091', 3, 1, 'UX/UI Design')");
+            executePlainSQL("INSERT INTO Student VALUES (1, 1, 'Nicholas', 'Fong', 20, 'nicholas.fong@gmail.com', '604-222-4444', 3, 5, 'Software Engineering')");
+            executePlainSQL("INSERT INTO Student VALUES (2, 2, 'Cole', 'Rowell', 20, 'cole.rowell@gmail.com', '236-777-6666', 2, 3, 'Data Science')");
+            executePlainSQL("INSERT INTO Student VALUES (3, 3, 'Anikait', 'Kapur', 20, 'anikait.kapur@hotmail.com', '778-101-9999', 4, 1, 'Product Management')");
+            executePlainSQL("INSERT INTO Student VALUES (4, 4, 'John', 'Doe', 22, 'john.doe@gmail.com', '236-202-1111', 1, 1, 'Business Analysis')");
+            executePlainSQL("INSERT INTO Student VALUES (5, 2, 'Jane', 'Smith', 19, 'jane.smith@gmail.com', '778-212-2222', 2, 3, 'Web Development')");
+            executePlainSQL("INSERT INTO Student VALUES (6, 1, 'Nate', 'Diaz', 38, 'nate.diaz@yahoo.com', '604-333-3333', 4, 0, 'Chemical Engineering')");
+            executePlainSQL("INSERT INTO Student VALUES (7, 2, 'Nick', 'Diaz', 40, 'nick.diaz@gmail.com', '604-333-6666', 2, 1, 'Mechanical Engineering')");
+            executePlainSQL("INSERT INTO Student VALUES (8, 2, 'Jake', 'Paul', 26, 'jake.paul@gmail.com', '604-111-1111', 3, 3, 'Machine Learning')");
+            executePlainSQL("INSERT INTO Student VALUES (9, 3, 'Robert', 'Johnson', 20, 'robert.johnson@yahoo.com', '778-987-6543', 2, 4, 'Finance')");
+            executePlainSQL("INSERT INTO Student VALUES (10, 4, 'Sarah', 'Williams', 21, 'sarah.williams@gmail.com', '778-888-8888', 1, 2, 'Marketing')");
+            executePlainSQL("INSERT INTO Student VALUES (11, 1, 'Michael', 'Brown', 22, 'michael.brown@gmail.com', '236-555-5555', 2, 3, 'Accounting')");
+            executePlainSQL("INSERT INTO Student VALUES (12, 3, 'Sophia', 'Taylor', 27, 'sophia.taylor@yahoo.com', '604-666-2222', 4, 2, 'Electrical Engineering')");
+            executePlainSQL("INSERT INTO Student VALUES (13, 4, 'James', 'Wilson', 22, 'james.wilson@gmail.com', '236-777-4444', 2, 1, 'Renewable Energy')");
+            executePlainSQL("INSERT INTO Student VALUES (14, 2, 'Olivia', 'Martin', 18, 'olivia.martin@hotmail.com', '778-222-1111', 3, 4, 'Human Resources')");
+            executePlainSQL("INSERT INTO Student VALUES (15, 2, 'Ethan', 'Chen', 19, 'ethan.chen@gmail.com', '236-666-7777', 4, 2, 'Web Development')");
+            executePlainSQL("INSERT INTO Student VALUES (16, 3, 'Liam', 'Lee', 25, 'liam.lee@yahoo.com', '778-123-4567', 3, 0, 'Machine Learning')");
+            executePlainSQL("INSERT INTO Student VALUES (17, 2, 'Emma', 'Dean', 16, 'emma.dean@gmail.com', '604-623-6478', 2, 1, 'Sales')");
+            executePlainSQL("INSERT INTO Student VALUES (18, 1, 'Norah', 'Wong', 22, 'norah.wong@yahoo.com', '604-518-5235', 1, 2, 'Accounting')");
+            executePlainSQL("INSERT INTO Student VALUES (19, 4, 'Ethan', 'Thompson', 23, 'ethan.thompson@hotmail.com', '778-314-5912', 2, 0, 'Data Science')");
+            executePlainSQL("INSERT INTO Student VALUES (20, 3, 'Bruce', 'Klein', 20, 'bruce.klein@email.com', '604-475-9091', 3, 1, 'UX/UI Design')");
 
             executePlainSQL("INSERT INTO StudentDocument VALUES (1, 'Resume_Nicholas_Fong', TO_DATE('2023-07-27', 'YYYY-MM-DD'), TO_TIMESTAMP('09:30:00', 'HH24:MI:SS'), 1)");
             executePlainSQL("INSERT INTO StudentDocument VALUES (2, 'Resume_Cole_Rowell', TO_DATE('2023-02-10', 'YYYY-MM-DD'), TO_TIMESTAMP('10:15:00', 'HH24:MI:SS'), 2)");
@@ -648,16 +607,25 @@
             VALUES (1, 'Nicholas_Fong_App', 1, 1, 1, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-                        VALUES (2, 'Cole_Rowell_App', 2, 2, 2, DATE '2023-07-27')");
+            VALUES (2, 'Cole_Rowell_App', 2, 2, 2, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-                        VALUES (3, 'Anikait_Kapur_App', 3, 3, 3, DATE '2023-07-27')");
+            VALUES (3, 'Anikait_Kapur_App', 3, 3, 3, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-                        VALUES (4, 'John_Doe_App', 4, 4, 4, DATE '2023-07-27')");
+            VALUES (4, 'John_Doe_App', 4, 4, 4, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
-                        VALUES (5, 'Jane_Smith_App', 5, 5, 5, DATE '2023-07-27')");
+            VALUES (5, 'Jane_Smith_App', 5, 5, 5, DATE '2023-07-27')");
+
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (6, 'Cole_Rowell_App', 2, 2, 3, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (7, 'Cole_Rowell_App', 2, 2, 4, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (8, 'Cole_Rowell_App', 2, 2, 5, DATE '2023-07-27')");
+            executePlainSQL("INSERT INTO JobApplication (ApplicationID, ApplicationName, StudentID, ResumeDocumentID, JobID, ApplicationDate)
+            VALUES (9, 'Cole_Rowell_App', 2, 2, 1, DATE '2023-07-27')");
 
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (1, 6)");
             executePlainSQL("INSERT INTO AppContainsCoverLetter VALUES (2, 7)");
@@ -728,19 +696,20 @@
         }
 
 
-        function handleSelectionRequest(){
+        function handleSelectionRequest() {
             global $db_conn;
             $attribute = $_GET["Attribute"];
             $table = $_GET["Table"];
             $condition = $_GET["Condition"];
         
-            if ($condition == "NONE"){
+            if ($condition == "NONE") {
                 $result = executePlainSQL("SELECT $attribute FROM $table");
-            } else{
-                $result = executePlainSQL("SELECT $attribute FROM $table WHERE $condition ");
+            } else {
+                $result = executePlainSQL("SELECT $attribute FROM $table WHERE $condition");
             }
             printResult($result);
         }
+        
 
         // HANDLE ALL POST ROUTES
 	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -752,7 +721,9 @@
                     handleUpdateRequestCoopAdvisor();
                 } else if (array_key_exists('insertCoopAdvisorRequest', $_POST)) {
                     handleInsertRequestCoopAdvisor();
-                } 
+                } else if (array_key_exists('deleteCoopAdvisorRequest', $_POST)){
+                    handleDeleteRequestCoopAdvisor();
+                }
 
                 disconnectFromDB();
             }
@@ -768,16 +739,13 @@
             }
         }
 
-        function hdandleDivisionRequest(){
-
-        }
+    
         
         
 
         
 
-                // HANDLE ALL GET ROUTES
-	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
+               
         function handleGETRequest() {
             if (connectToDB()) {
                 if (array_key_exists('countTuples', $_GET)) {
@@ -788,19 +756,26 @@
                     handlejoinTableRequest();
                 } else if(array_key_exists("selectionRequest", $_GET)){
                     handleSelectionRequest();
-                } else if(array_key_exists("divisionRequest", $_GET)){
-                    hdandleDivisionRequest();
                 } else if(array_key_exists("studentProjectionRequest", $_GET)) {
                     handleProjectionRequest();
                 } else if (array_key_exists("advisorStudentCountThresholdRequest", $_GET)) {
                     handleAdvisorStudentCountThresholdRequest();
+                } else if (array_key_exists("nestedAggregationWithGroupBy", $_GET)){
+                    handleNestedAggregationWithGroupBy();
+                } else if (array_key_exists("aggregationWithGroupBy", $_GET)){
+                    handleAggregationWithGroupBy();
+                } else if(array_key_exists("divisionRequest", $_GET)){
+                    handleDivisionRequest();
                 }
                 
                 disconnectFromDB();
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateCoopAdvisor']) || isset($_POST['insertCoopAdvisor'])) {
+        if (isset($_POST['reset']) || isset($_POST['insertCoopAdvisor']) || isset($_POST["deleteCoopAdvisor"]) ) {
+            handlePOSTRequest();
+        } else if (isset($_POST["updateCoopAdvisorRequest"]) || isset($_POST["updateCoopAdvisor"])) {
+            echo 'hello';
             handlePOSTRequest();
         } else if (isset($_GET['countTupleRequest']) || isset($_GET["displayTableRequest"]) || isset($_GET["selectionRequest"])) {
             handleGETRequest();
@@ -808,9 +783,14 @@
             handleGETRequest();
         } else if (isset($_GET['studentProjectionRequest']) || isset($_GET["projectAttributes"])) {
             handleGETRequest();
-        } if (isset($_GET["advisorStudentCountThresholdRequest"]) || ($_GET["findAdvisors"])) {
+        } else if (isset($_GET["advisorStudentCountThresholdRequest"]) || ($_GET["findAdvisors"])) {
             handleGETRequest();
-        }
+        } else if (isset($_GET["nestedAggregationWithGroupByRequest"]) || isset($_GET["aggregationWithGroupByRequest"])) {
+            handleGETRequest();
+        } else if (isset($_GET["divisionRequest"]) || isset($_GET["division"])) {
+            handleGETRequest();
+        } 
+       
 
         function handlejoinTableRequest() {
             global $db_conn;
@@ -928,5 +908,79 @@
                 echo "Please provide attributes to project.";
             }
         }
+
+        function printNestedAggregationWithGroupByResult($result) { //prints results from a select statement
+            echo "<br>Min Age of Students Whose Age is Greater Than the Average Age of Students Whose Phone Number Starts With 236 for Each Co-op Advisor:<br>";
+            echo "<table>";
+            echo "<tr><th>Coop Advisor ID</th><th>Min Age of Students</th></tr>";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                //echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td></tr>";
+            }
+
+            echo "</table>";
+        }
+
+        function printAggregationWithGroupByResult($result) { //prints results from a select statement
+            echo "<br>Number of Students per Co-op Advisor:<br>";
+            echo "<table>";
+            echo "<tr><th>Advisor ID</th><th>Number of Students</th></tr>";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                //echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]"
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>";
+            }
+
+            echo "</table>";
+        }
+
+        function handleDeleteRequestCoopAdvisor(){
+            global $db_conn;
+
+            $ID = $_POST['CoopAdvisorAdvisorID'];
+
+            executePlainSQL("DELETE FROM CoopAdvisor WHERE CoopAdvisorAdvisorID = {$ID}");
+            OCICommit($db_conn);
+
+            handleDisplayRequest();
+        }
+
+        function handleAggregationWithGroupBy(){
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT AdvisorID, COUNT(*) FROM Student GROUP BY AdvisorID");
+            printAggregationWithGroupByResult($result);
+        }
+
+        function handleNestedAggregationWithGroupBy(){
+            global $db_conn;
+
+
+            $result = executePlainSQL("SELECT S1.AdvisorID, MIN(Age)
+            FROM Student S1
+            WHERE S1.Age > (SELECT AVG(S.Age) FROM Student S WHERE PhoneNumber LIKE '236%')
+            GROUP BY S1.AdvisorID");
+            printNestedAggregationWithGroupByResult($result);
+        }
+
+        function handleDivisionRequest(){
+            global $db_conn;
+            echo "<br>Number of Students per Co-op Advisor:<br>";
+            $result = executePlainSQL("SELECT StudentID
+            FROM Student
+            WHERE NOT EXISTS (
+                SELECT JobID
+                FROM Job
+                MINUS
+                SELECT JobID
+                FROM JobApplication
+                WHERE Student.StudentID = JobApplication.StudentID
+            )");
+            printResult(($result));
+        }
+
+
+    
         
 ?>
