@@ -160,10 +160,16 @@
     <p><input type="submit" value="Count Tuples" name="countTuples"></p>
 </form>
 
-<h3> Display CoopAdvisorTable</h3>
+<h3> Display CoopAdvisor Table</h3>
 <form method="Get" action="index.php">
     <input type="hidden" id="displayTableRequest" name="displayTableRequest">
     <p><input type="submit" value="Display Table" name="DisplayTable"></p>
+</form>
+
+<h3> Display Student Table</h3>
+<form method="GET" action="index.php">
+    <input type="hidden" id="displayStudentRequest" name="displayStudentRequest">
+    <p><input type="submit" value="Display Student" name="displayStudent"></p>
 </form>
 
 <h3>Division</h3>
@@ -709,7 +715,7 @@
             OCICommit($db_conn);
         
             // Display the updated Co-op advisor table
-            displayCoopAdvisorTable();
+            handleDisplayRequest();
         }
 
         function handleCountRequest() {
@@ -772,11 +778,24 @@
             }
         }
 
-    
-        
-        
+        function printStudentResult($result) { //prints results from a select statement
+            echo "<br>Retrieved data from table CoopAdvisor:<br>";
+            echo "<table>";
+            echo "<tr><th>Student ID</th><th>Advisor ID</th><th>First Name</th><th>Last Name</th><th>Age</th><th>Email Address</th><th>Phone Number</th><th>Current Year</th><th>Number of Completed Terms</th><th>Job Preferences</th></tr>";
 
-        
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td><td>" . $row[6] . "</td><td>" . $row[7] . "</td><td>" . $row[8] . "</td><td>" . $row[9] . "</td></tr>";
+            }
+
+            echo "</table>";
+        }
+
+        function handleStudentRequest(){
+            global $db_conn;
+
+            $result = executePlainSQL("SELECT * FROM Student");
+            printStudentResult($result);
+        }
 
                
         function handleGETRequest() {
@@ -799,8 +818,10 @@
                     handleAggregationWithGroupBy();
                 } else if(array_key_exists("divisionRequest", $_GET)){
                     handleDivisionRequest();
+                } else if (array_key_exists("displayStudent", $_GET)){
+                    handleStudentRequest();
                 }
-                
+
                 disconnectFromDB();
             }
         }
@@ -821,6 +842,8 @@
         } else if (isset($_GET["nestedAggregationWithGroupByRequest"]) || isset($_GET["aggregationWithGroupByRequest"])) {
             handleGETRequest();
         } else if (isset($_GET["divisionRequest"]) || isset($_GET["division"])) {
+            handleGETRequest();
+        } else if (isset($_GET["displayStudentRequest"])){
             handleGETRequest();
         } 
        
@@ -977,6 +1000,7 @@
             OCICommit($db_conn);
 
             handleDisplayRequest();
+            handleStudentRequest();
         }
 
         function handleAggregationWithGroupBy(){
