@@ -175,7 +175,7 @@
 <h3>Division</h3>
 <form method="GET" action="index.php">
     <input type="hidden" id ="divisionRequest" name = "divisionRequest">
-    <p><input type="submit" value="Create" name="division"></p>
+    <p><input type="submit" value="Perform" name="division"></p>
 </form>
 
 <h3>Find Advisors with Student Count More Than:</h3>
